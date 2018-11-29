@@ -106,26 +106,30 @@ public class PlayerTests {
         Player opponent = new Player(
             new PlayerOptions(8, opponentHitPoints)
         );
+
+        player.attack(opponent, rollValue);
+
+        assertThat(opponent.getHitPoints(), is(opponentHitPoints - 2));
     }
 
-        /*
-            Feature: Character Can Be Damaged
-                As an attacker I want to be able to damage my enemies so that they will die and I will live
-                    - when hit points are 0 or less, the character is dead
-        */
-        @Test
-        public void GivenAPlayerAttack_WhenOpponentLosesLastHitPoint_ThenOpponentIsDead() {
+    /*
+        Feature: Character Can Be Damaged
+            As an attacker I want to be able to damage my enemies so that they will die and I will live
+                - when hit points are 0 or less, the character is dead
+    */
+    @Test
+    public void GivenAPlayerAttack_WhenOpponentLosesLastHitPoint_ThenOpponentIsDead() {
 
-            int opponentHitPoints = 1;
-            int rollValue = 20;
+        int opponentHitPoints = 1;
+        int rollValue = 20;
 
-            Player player = getStandardPlayer();
+        Player player = getStandardPlayer();
 
-            Player opponent = new Player(
-                new PlayerOptions(8, opponentHitPoints)
-            );
+        Player opponent = new Player(
+            new PlayerOptions(8, opponentHitPoints)
+        );
 
-            player.attack(opponent, rollValue);
+        player.attack(opponent, rollValue);
 
         assertThat(opponent.isDead(), is(true));
     }

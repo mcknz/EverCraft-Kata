@@ -11,46 +11,46 @@ public class PlayerOptions {
         this("Player");
     }
 
-    public PlayerOptions(String name) {
+    PlayerOptions(String name) {
         this(name, Alignment.NEUTRAL);
     }
 
-    public PlayerOptions(Alignment alignment) {
+    PlayerOptions(Alignment alignment) {
         this("Player", alignment);
     }
 
-    public PlayerOptions(int armorClass, int hitPoints) {
+    PlayerOptions(int armorClass, int hitPoints) {
         this("Player", Alignment.NEUTRAL, armorClass, hitPoints);
     }
 
-    public PlayerOptions(String name, Alignment alignment) {
+    PlayerOptions(String name, Alignment alignment) {
         this(name, alignment, 0);
     }
 
-    public PlayerOptions(String name, Alignment alignment, int armorClass) {
+    PlayerOptions(String name, Alignment alignment, int armorClass) {
         this(name, alignment, armorClass, 0);
     }
 
-    public PlayerOptions(String name, Alignment alignment, int armorClass, int hitPoints) {
+    PlayerOptions(String name, Alignment alignment, int armorClass, int hitPoints) {
         this.name = name;
         this.alignment = alignment;
         this.armorClass = armorClass;
         this.hitPoints = hitPoints;
     }
 
-    public final String getName() {
+    final String getName() {
         return this.name;
     }
 
-    public final Alignment getAlignment() {
+    final Alignment getAlignment() {
         return this.alignment;
     }
 
-    public final int getArmorClass() {
+    final int getArmorClass() {
         return this.armorClass;
     }
 
-    public final int getHitPoints() {
+    final int getHitPoints() {
         return this.hitPoints;
     }
 
