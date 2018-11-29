@@ -9,6 +9,9 @@ import static org.junit.Assert.assertTrue;
 
 public class PlayerTests {
 
+    private Player getStandardPlayer() {
+        return new Player(new PlayerOptions(10,10));
+    }
     /*
     Feature: Create a Character
         As a character I want to have a name so that I can be distinguished from other characters
@@ -56,9 +59,7 @@ public class PlayerTests {
     @Test
     public void GivenAPlayerAttack_WhenDieRolls10AndOpponentArmorClassIs8_ThenOpponentIsHit() {
 
-        Player player = new Player(
-            new PlayerOptions(10, 10)
-        );
+        Player player = getStandardPlayer();
 
         Player opponent = new Player(
             new PlayerOptions(8,4)
@@ -75,17 +76,16 @@ public class PlayerTests {
     @Test
     public void GivenAPlayerAttack_WhenDieRolls10AndOpponentArmorClassIs8_ThenOpponentTakesOneDamagePointLoss() {
 
-        Player player = new Player(
-            new PlayerOptions(10, 10)
-        );
-
         int opponentHitPoints = 5;
+        int rollValue = 10;
+
+        Player player = getStandardPlayer();
 
         Player opponent = new Player(
-            new PlayerOptions(8,opponentHitPoints)
+            new PlayerOptions(8, opponentHitPoints)
         );
 
-        player.attack(opponent, 10);
+        player.attack(opponent, rollValue);
 
         assertThat(opponent.getHitPoints(), is(opponentHitPoints - 1));
     }
@@ -95,5 +95,42 @@ public class PlayerTests {
         As an attacker I want to be able to damage my enemies so that they will die and I will live
             - If a roll is a natural 20 then a critical hit is dealt and the damage is doubled
     */
+    @Test
+    public void GivenAPlayerAttack_WhenDieRolls20AndOpponentArmorClassIs8_ThenOpponentTakesTwoDamagePointLoss() {
+
+        int opponentHitPoints = 5;
+        int rollValue = 20;
+
+        Player player = getStandardPlayer();
+
+        Player opponent = new Player(
+            new PlayerOptions(8, opponentHitPoints)
+        );
+    }
+
+        /*
+            Feature: Character Can Be Damaged
+                As an attacker I want to be able to damage my enemies so that they will die and I will live
+                    - when hit points are 0 or less, the character is dead
+        */
+        @Test
+        public void GivenAPlayerAttack_WhenOpponentLosesLastHitPoint_ThenOpponentIsDead() {
+
+            int opponentHitPoints = 1;
+            int rollValue = 20;
+
+            Player player = getStandardPlayer();
+
+            Player opponent = new Player(
+                new PlayerOptions(8, opponentHitPoints)
+            );
+
+            player.attack(opponent, rollValue);
+
+        assertThat(opponent.isDead(), is(true));
+    }
+
+
+
 
 }

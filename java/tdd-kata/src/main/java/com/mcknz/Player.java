@@ -1,48 +1,56 @@
 package com.mcknz;
 
-public class Player {
+class Player {
 
     private final String name;
     private final Alignment alignment;
     private final int armorClass;
     private int hitPoints;
 
-    public Player() {
-        this(new PlayerOptions());
-    }
+    //public Player() {
+    //    this(new PlayerOptions());
+    //}
 
-    public Player(PlayerOptions options) {
+    Player(PlayerOptions options) {
         this.name = options.getName();
         this.alignment = options.getAlignment();
         this.armorClass = options.getArmorClass();
         this.hitPoints = options.getHitPoints();
     }
 
-    public String getName() {
+    String getName() {
         return name;
     }
 
-    public Object getAlignment() {
+    Alignment getAlignment() {
         return alignment;
     }
 
-    public Object getArmorClass() {
+    int getArmorClass() {
         return armorClass;
     }
 
-    public Object getHitPoints() {
+    int getHitPoints() {
         return hitPoints;
     }
 
-    public boolean attack(Player opponent, int roll) {
+    boolean attack(Player opponent, int roll) {
         boolean isHit = roll >= opponent.armorClass;
         if(isHit) {
-            opponent.hit(1);
+            if(roll == 20) {
+                opponent.hit(2);
+            } else {
+                opponent.hit(1);
+            }
         }
         return isHit;
     }
 
-    public void hit(int damage) {
-        this.hitPoints-=1;
+    private void hit(int damage) {
+        this.hitPoints-=damage;
+    }
+
+    boolean isDead() {
+        return this.hitPoints < 1;
     }
 }
