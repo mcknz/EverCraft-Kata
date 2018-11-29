@@ -1,0 +1,18 @@
+package com.mcknz;
+
+public class Die {
+
+    int value;
+
+    public Die() {
+        this(1);
+    }
+
+    public Die(int value) {
+        this.value = value;
+    }
+
+    public int roll() {
+        return value;
+    }
+}
