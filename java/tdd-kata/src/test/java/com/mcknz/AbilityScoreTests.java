@@ -51,7 +51,7 @@ public class AbilityScoreTests {
     @Test
     public void GivenTheIntelligenceAbility_WhenHasScore_ThenModifierIsCorrect() {
         Intelligence intelligence = new Intelligence();
-        intelligence.reset(score);
+        intelligence.set(score);
         assertThat(intelligence.getModifier(), is(modifier));
     }
 }

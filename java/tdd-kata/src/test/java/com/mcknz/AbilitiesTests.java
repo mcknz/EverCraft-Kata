@@ -21,7 +21,8 @@ public class AbilitiesTests {
 
     /*
     Feature: Character Has Abilities Scores
-        As a character I want to have several abilities so that I am not identical to other characters except in name
+        As a character I want to have several abilities
+        so that I am not identical to other characters except in name
             - Abilities are Strength, Dexterity, Constitution, Wisdom, Intelligence, Charisma
             - Abilities range from 1 to 20 and default to 10
     */
@@ -32,7 +33,8 @@ public class AbilitiesTests {
 
     /*
         Feature: Character Has Abilities Scores
-            As a character I want to have several abilities so that I am not identical to other characters except in name
+            As a character I want to have several abilities
+            so that I am not identical to other characters except in name
                 - Abilities range from 1 to 20 and default to 10
     */
     @Test
@@ -44,7 +46,8 @@ public class AbilitiesTests {
 
     /*
         Feature: Character Has Abilities Scores
-            As a character I want to have several abilities so that I am not identical to other characters except in name
+            As a character I want to have several abilities
+            so that I am not identical to other characters except in name
                 - Abilities range from 1 to 20 and default to 10
     */
     @Test
@@ -56,13 +59,14 @@ public class AbilitiesTests {
 
     /*
         Feature: Character Has Abilities Scores
-            As a character I want to have several abilities so that I am not identical to other characters except in name
+            As a character I want to have several abilities
+            so that I am not identical to other characters except in name
                 - Abilities range from 1 to 20 and default to 10
     */
     @Test
     public void GivenTheCharismaAbility_WhenResetTo5_ThenValueShouldBe5() {
         Charisma charisma = new Charisma();
-        charisma.reset(5);
+        charisma.set(5);
         assertThat(charisma.getScore(), is(5));
     }
 }

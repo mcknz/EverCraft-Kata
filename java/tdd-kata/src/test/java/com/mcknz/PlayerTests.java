@@ -1,17 +1,12 @@
 package com.mcknz;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 
-public class PlayerTests {
+public class PlayerTests extends Tests {
 
-    private Player getStandardPlayer() {
-        return new Player(new PlayerOptions(10,10));
-    }
     /*
     Feature: Create a Character
         As a character I want to have a name so that I can be distinguished from other characters
@@ -20,7 +15,7 @@ public class PlayerTests {
     @Test
     public void GivenAPlayer_WhenCreated_ThenShouldHaveAName() {
         PlayerOptions options = new PlayerOptions("Gandalf");
-        assertThat(new Player(options).getName(), is("Gandalf"));
+        assertThat(getStandardPlayer(options).getName(), is("Gandalf"));
     }
 
     /*
@@ -32,7 +27,7 @@ public class PlayerTests {
     @Test
     public void GivenAPlayer_WhenCreated_ThenShouldHaveAnAlignment() {
         PlayerOptions options = new PlayerOptions(Alignment.EVIL);
-        assertThat(new Player(options).getAlignment(), is(Alignment.EVIL));
+        assertThat(getStandardPlayer(options).getAlignment(), is(Alignment.EVIL));
     }
 
     /*
@@ -43,7 +38,7 @@ public class PlayerTests {
     */
     @Test
     public void GivenAPlayer_WhenCreated_ThenHasArmorAndHitPoints() {
-        Player player = new Player(
+        Player player = getStandardPlayer(
             new PlayerOptions(10, 5)
         );
         assertThat(player.getArmorClass(), is(10));
@@ -61,7 +56,7 @@ public class PlayerTests {
 
         Player player = getStandardPlayer();
 
-        Player opponent = new Player(
+        Player opponent = getStandardPlayer(
             new PlayerOptions(8,4)
         );
 
@@ -81,7 +76,7 @@ public class PlayerTests {
 
         Player player = getStandardPlayer();
 
-        Player opponent = new Player(
+        Player opponent = getStandardPlayer(
             new PlayerOptions(8, opponentHitPoints)
         );
 
@@ -96,14 +91,14 @@ public class PlayerTests {
             - If a roll is a natural 20 then a critical hit is dealt and the damage is doubled
     */
     @Test
-    public void GivenAPlayerAttack_WhenDieRolls20AndOpponentArmorClassIs8_ThenOpponentTakesTwoDamagePointLoss() {
+    public void GivenAPlayerAttack_WhenDieRolls20AndOpponentArmorClassIs8_ThenOpponentTakesDoubleDamagePointLoss() {
 
         int opponentHitPoints = 5;
         int rollValue = 20;
 
         Player player = getStandardPlayer();
 
-        Player opponent = new Player(
+        Player opponent = getStandardPlayer(
             new PlayerOptions(8, opponentHitPoints)
         );
 
@@ -125,7 +120,7 @@ public class PlayerTests {
 
         Player player = getStandardPlayer();
 
-        Player opponent = new Player(
+        Player opponent = getStandardPlayer(
             new PlayerOptions(8, opponentHitPoints)
         );
 
