@@ -1,4 +1,4 @@
-package com.mcknz;
+package com.mcknz.abilities;
 
 import com.mcknz.abilities.*;
 import org.junit.Test;
@@ -6,7 +6,7 @@ import org.junit.Test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-public class AbilitiesTests {
+public class AbilityTests {
 
     /*
         Feature: Character Has Abilities Scores

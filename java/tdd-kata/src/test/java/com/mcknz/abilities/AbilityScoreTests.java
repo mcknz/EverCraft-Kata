@@ -1,4 +1,4 @@
-package com.mcknz;
+package com.mcknz.abilities;
 
 import com.mcknz.abilities.Intelligence;
 
@@ -16,8 +16,8 @@ import static org.junit.Assert.assertThat;
 @RunWith(Parameterized.class)
 public class AbilityScoreTests {
 
-    private int score;
-    private int modifier;
+    private final int score;
+    private final int modifier;
 
     @Parameters
     public static Collection<Object[]> data() {

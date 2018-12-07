@@ -1,11 +1,15 @@
-package com.mcknz;
+package com.mcknz.player;
 
+import com.mcknz.AbstractTests;
+import com.mcknz.abilities.constants.ValueType;
+import com.mcknz.player.constants.Alignment;
+import com.mcknz.player.constants.PlayerOptions;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-public class PlayerTests extends Tests {
+public class PlayerTests extends AbstractTests {
 
     /*
     Feature: Create a Character
@@ -41,8 +45,8 @@ public class PlayerTests extends Tests {
         Player player = getStandardPlayer(
             new PlayerOptions(10, 5)
         );
-        assertThat(player.getArmorClass(), is(10));
-        assertThat(player.getHitPoints(), is(5));
+        assertThat(player.getValue(ValueType.ARMOR), is(10));
+        assertThat(player.getValue(ValueType.HIT_POINTS), is(5));
     }
 
     /*
@@ -60,7 +64,7 @@ public class PlayerTests extends Tests {
             new PlayerOptions(8,4)
         );
 
-        assertThat(player.attack(opponent, 10), is(true));
+        assertThat(attack(player, opponent, 10), is(true));
     }
 
     /*
@@ -69,7 +73,7 @@ public class PlayerTests extends Tests {
             - If attack is successful, other character takes 1 point of damage when hit
     */
     @Test
-    public void GivenAPlayerAttack_WhenDieRolls10AndOpponentArmorClassIs8_ThenOpponentTakesOneDamagePointLoss() {
+    public void GivenAPlayerAttack_WhenDieRolls10AndOpponentArmorClassIs8_ThenOpponentTakesOneHitPointLoss() {
 
         int opponentHitPoints = 5;
         int rollValue = 10;
@@ -80,9 +84,9 @@ public class PlayerTests extends Tests {
             new PlayerOptions(8, opponentHitPoints)
         );
 
-        player.attack(opponent, rollValue);
+        attack(player, opponent, rollValue);
 
-        assertThat(opponent.getHitPoints(), is(opponentHitPoints - 1));
+        assertThat(opponent.getValue(ValueType.HIT_POINTS), is(opponentHitPoints - 1));
     }
 
     /*
@@ -102,9 +106,9 @@ public class PlayerTests extends Tests {
             new PlayerOptions(8, opponentHitPoints)
         );
 
-        player.attack(opponent, rollValue);
+        attack(player, opponent, rollValue);
 
-        assertThat(opponent.getHitPoints(), is(opponentHitPoints - 2));
+        assertThat(opponent.getValue(ValueType.HIT_POINTS), is(opponentHitPoints - 2));
     }
 
     /*
@@ -124,12 +128,8 @@ public class PlayerTests extends Tests {
             new PlayerOptions(8, opponentHitPoints)
         );
 
-        player.attack(opponent, rollValue);
+        attack(player, opponent, rollValue);
 
         assertThat(opponent.isDead(), is(true));
     }
-
-
-
-
 }

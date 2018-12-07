@@ -1,22 +1,24 @@
 package com.mcknz.abilities;
 
+import com.mcknz.abilities.constants.*;
+
 import java.util.Arrays;
 import java.util.List;
 
 public abstract class Ability {
     private int score;
 
-    public Ability() {
+    Ability() {
         this(10);
     }
 
-    public Ability(int score) {
+    private Ability(int score) {
         this.score = score;
     }
 
     abstract AbilityType getType();
 
-    private List<Integer> scoreModifiers = Arrays.asList(
+    private final List<Integer> scoreModifiers = Arrays.asList(
         -999, -5, -4, -4, -3, -3, -2, -2, -1, -1, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5
     );
 
@@ -24,26 +26,22 @@ public abstract class Ability {
         return score;
     }
 
-    public int change(int value) {
+    public void change(int value) {
         score+=value;
-        return validateScore();
+        validateScore();
     }
 
-    public int set(int value) {
+    public void set(int value) {
         score = value;
-        return validateScore();
+        validateScore();
     }
 
     public int getModifier() {
         return scoreModifiers.get(score);
     }
 
-    public int modifyRoll(int roll) {
-        return roll;
-    }
-
-    public int modifyDamage(int damage) {
-        return damage;
+    public int add(ValueType type, int value) {
+        return 0;
     }
 
     private int validateScore() {

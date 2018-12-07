@@ -1,4 +1,4 @@
-package com.mcknz.abilities;
+package com.mcknz.abilities.exceptions;
 
 public class AbilityException extends Exception {
     public AbilityException(Exception ex) {

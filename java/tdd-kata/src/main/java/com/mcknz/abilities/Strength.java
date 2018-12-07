@@ -1,5 +1,7 @@
 package com.mcknz.abilities;
 
+import com.mcknz.abilities.constants.*;
+
 public class Strength extends Ability {
 
     @Override
@@ -8,12 +10,12 @@ public class Strength extends Ability {
     }
 
     @Override
-    public int modifyRoll(int roll) {
-        return roll + this.getModifier();
-    }
-
-    @Override
-    public int modifyDamage(int damage) {
-        return damage + this.getModifier();
+    public int add(ValueType type, int value) {
+        switch(type) {
+            case ROLL:
+            case DAMAGE:
+                return this.getModifier();
+        }
+        return super.add(type, value);
     }
 }

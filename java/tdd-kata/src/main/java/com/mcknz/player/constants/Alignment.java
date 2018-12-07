@@ -1,4 +1,4 @@
-package com.mcknz;
+package com.mcknz.player.constants;
 
 public enum Alignment {
     GOOD,

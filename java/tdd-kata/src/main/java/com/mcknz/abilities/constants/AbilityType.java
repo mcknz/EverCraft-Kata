@@ -1,4 +1,4 @@
-package com.mcknz.abilities;
+package com.mcknz.abilities.constants;
 
 public enum AbilityType {
     CHARISMA("Charisma"),
