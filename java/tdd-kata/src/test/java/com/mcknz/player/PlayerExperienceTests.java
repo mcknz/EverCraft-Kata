@@ -3,7 +3,6 @@ package com.mcknz.player;
 import com.mcknz.AbstractTests;
 import com.mcknz.abilities.constants.AbilityType;
 import com.mcknz.abilities.constants.ValueType;
-import com.mcknz.player.constants.PlayerOptions;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -20,10 +19,10 @@ public class PlayerExperienceTests extends AbstractTests {
     @Test
     public void GivenAPlayerAttack_WhenOpponentIsHit_ThenPlayerGains10ExperiencePoints() {
 
-        Player player = getStandardPlayer();
+        Player player = getPlayer();
 
-        Player opponent = getStandardPlayer(
-            new PlayerOptions(10, 10)
+        Player opponent = getPlayer(
+            getPlayerOptions(10, 10)
         );
 
         attack(player, opponent, 19);
@@ -39,7 +38,7 @@ public class PlayerExperienceTests extends AbstractTests {
      */
     @Test
     public void GivenAPlayer_WhenCreated_ThenPlayerHasLevel1() {
-        Player player = getStandardPlayer();
+        Player player = getPlayer();
         assertThat(player.getValue(ValueType.LEVEL), is(1));
     }
 
@@ -55,10 +54,10 @@ public class PlayerExperienceTests extends AbstractTests {
  */
     @Test
     public void GivenAPlayer_WhenPlayerHitsOpponent100Times_ThenPlayerHasLevel2() {
-        Player player = getStandardPlayer();
+        Player player = getPlayer();
 
-        Player opponent = getStandardPlayer(
-            new PlayerOptions(10, 10)
+        Player opponent = getPlayer(
+            getPlayerOptions(10, 10)
         );
 
         for(int i = 0; i < 100; i++ ) {
@@ -77,11 +76,11 @@ public class PlayerExperienceTests extends AbstractTests {
      */
     @Test
     public void GivenAPlayerWith20Constitution_WhenPlayerHitsOpponent200Times_ThenHitPointsAre25() {
-        Player player = getStandardPlayer();
+        Player player = getPlayer();
         setPlayerAbility(player, AbilityType.CONSTITUTION, 20);
 
-        Player opponent = getStandardPlayer(
-            new PlayerOptions(10, 10)
+        Player opponent = getPlayer(
+            getPlayerOptions(10, 10)
         );
 
         for(int i = 0; i < 200; i++ ) {
@@ -99,10 +98,10 @@ public class PlayerExperienceTests extends AbstractTests {
      */
     @Test
     public void GivenAPlayerWithLevel4_WhenOpponentArmorClassIs10AndRollIs8_ThenOpponentIsHit() {
-        Player player = getStandardPlayer();
+        Player player = getPlayer();
 
-        Player opponent = getStandardPlayer(
-            new PlayerOptions(10, 10)
+        Player opponent = getPlayer(
+            getPlayerOptions(10, 10)
         );
 
         for(int i = 0; i < 300; i++ ) {

@@ -3,7 +3,6 @@ package com.mcknz.player;
 import com.mcknz.AbstractTests;
 import com.mcknz.abilities.constants.ValueType;
 import com.mcknz.player.constants.Alignment;
-import com.mcknz.player.constants.PlayerOptions;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -18,8 +17,8 @@ public class PlayerTests extends AbstractTests {
     */
     @Test
     public void GivenAPlayer_WhenCreated_ThenShouldHaveAName() {
-        PlayerOptions options = new PlayerOptions("Gandalf");
-        assertThat(getStandardPlayer(options).getName(), is("Gandalf"));
+        PlayerOptions options = getPlayerOptions("Gandalf");
+        assertThat(getPlayer(options).getName(), is("Gandalf"));
     }
 
     /*
@@ -30,8 +29,8 @@ public class PlayerTests extends AbstractTests {
      */
     @Test
     public void GivenAPlayer_WhenCreated_ThenShouldHaveAnAlignment() {
-        PlayerOptions options = new PlayerOptions(Alignment.EVIL);
-        assertThat(getStandardPlayer(options).getAlignment(), is(Alignment.EVIL));
+        PlayerOptions options = getPlayerOptions(Alignment.EVIL);
+        assertThat(getPlayer(options).getAlignment(), is(Alignment.EVIL));
     }
 
     /*
@@ -42,8 +41,8 @@ public class PlayerTests extends AbstractTests {
     */
     @Test
     public void GivenAPlayer_WhenCreated_ThenHasArmorAndHitPoints() {
-        Player player = getStandardPlayer(
-            new PlayerOptions(10, 5)
+        Player player = getPlayer(
+            getPlayerOptions(10, 5)
         );
         assertThat(player.getValue(ValueType.ARMOR), is(10));
         assertThat(player.getValue(ValueType.HIT_POINTS), is(5));
@@ -58,10 +57,10 @@ public class PlayerTests extends AbstractTests {
     @Test
     public void GivenAPlayerAttack_WhenDieRolls10AndOpponentArmorClassIs8_ThenOpponentIsHit() {
 
-        Player player = getStandardPlayer();
+        Player player = getPlayer();
 
-        Player opponent = getStandardPlayer(
-            new PlayerOptions(8,4)
+        Player opponent = getPlayer(
+            getPlayerOptions(8,4)
         );
 
         assertThat(attack(player, opponent, 10), is(true));
@@ -78,10 +77,10 @@ public class PlayerTests extends AbstractTests {
         int opponentHitPoints = 5;
         int rollValue = 10;
 
-        Player player = getStandardPlayer();
+        Player player = getPlayer();
 
-        Player opponent = getStandardPlayer(
-            new PlayerOptions(8, opponentHitPoints)
+        Player opponent = getPlayer(
+            getPlayerOptions(8, opponentHitPoints)
         );
 
         attack(player, opponent, rollValue);
@@ -100,10 +99,10 @@ public class PlayerTests extends AbstractTests {
         int opponentHitPoints = 5;
         int rollValue = 20;
 
-        Player player = getStandardPlayer();
+        Player player = getPlayer();
 
-        Player opponent = getStandardPlayer(
-            new PlayerOptions(8, opponentHitPoints)
+        Player opponent = getPlayer(
+            getPlayerOptions(8, opponentHitPoints)
         );
 
         attack(player, opponent, rollValue);
@@ -122,10 +121,10 @@ public class PlayerTests extends AbstractTests {
         int opponentHitPoints = 1;
         int rollValue = 20;
 
-        Player player = getStandardPlayer();
+        Player player = getPlayer();
 
-        Player opponent = getStandardPlayer(
-            new PlayerOptions(8, opponentHitPoints)
+        Player opponent = getPlayer(
+            getPlayerOptions(8, opponentHitPoints)
         );
 
         attack(player, opponent, rollValue);

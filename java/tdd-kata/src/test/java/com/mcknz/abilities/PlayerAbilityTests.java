@@ -2,7 +2,7 @@ package com.mcknz.abilities;
 
 import com.mcknz.abilities.constants.*;
 import com.mcknz.player.Player;
-import com.mcknz.player.constants.PlayerOptions;
+import com.mcknz.player.PlayerOptions;
 import com.mcknz.AbstractTests;
 import org.junit.Test;
 
@@ -21,11 +21,11 @@ public class PlayerAbilityTests extends AbstractTests {
     @Test
     public void GivenAPlayerWithStrength15_WhenDieRolls8AndOpponentArmorClassIs10_ThenOpponentIsHit() {
 
-        Player player = getStandardPlayer();
+        Player player = getPlayer();
         setPlayerAbility(player, AbilityType.STRENGTH, 15);
 
-        Player opponent = getStandardPlayer(
-            new PlayerOptions(10,4)
+        Player opponent = getPlayer(
+            getPlayerOptions(10,4)
         );
 
         assertThat(attack(player, opponent, 8), is(true));
@@ -41,11 +41,11 @@ public class PlayerAbilityTests extends AbstractTests {
     @Test
     public void GivenAPlayerWithStrength6_WhenDieRolls10AndOpponentArmorClassIs8_ThenOpponentIsNotHit() {
 
-        Player player = getStandardPlayer();
+        Player player = getPlayer();
         setPlayerAbility(player, AbilityType.STRENGTH, 6);
 
-        Player opponent = getStandardPlayer(
-            new PlayerOptions(10,4)
+        Player opponent = getPlayer(
+            getPlayerOptions(10,4)
         );
 
         assertThat(attack(player, opponent, 10), is(false));
@@ -61,13 +61,13 @@ public class PlayerAbilityTests extends AbstractTests {
     @Test
     public void GivenAPlayerWithStrength15_WhenOpponentIsHit_ThenOpponentLoses3HitPoints() {
 
-        Player player = getStandardPlayer();
+        Player player = getPlayer();
         setPlayerAbility(player, AbilityType.STRENGTH, 15);
 
         int opponentHitPoints = 4;
 
-        Player opponent = getStandardPlayer(
-            new PlayerOptions(8, opponentHitPoints)
+        Player opponent = getPlayer(
+            getPlayerOptions(8, opponentHitPoints)
         );
 
         attack(player, opponent, 10);
@@ -85,13 +85,13 @@ public class PlayerAbilityTests extends AbstractTests {
     @Test
     public void GivenAPlayerWithStrength15_WhenOpponentIsHitWith20Roll_ThenOpponentLoses6HitPoints() {
 
-        Player player = getStandardPlayer();
+        Player player = getPlayer();
         setPlayerAbility(player, AbilityType.STRENGTH, 15);
 
         int opponentHitPoints = 10;
 
-        Player opponent = getStandardPlayer(
-            new PlayerOptions(8, opponentHitPoints)
+        Player opponent = getPlayer(
+            getPlayerOptions(8, opponentHitPoints)
         );
 
         attack(player, opponent, 20);
@@ -111,13 +111,13 @@ public class PlayerAbilityTests extends AbstractTests {
     @Test
     public void GivenAPlayerWithStrength1_WhenOpponentIsHitWith20Roll_ThenOpponentLoses1HitPoint() {
 
-        Player player = getStandardPlayer();
+        Player player = getPlayer();
         setPlayerAbility(player, AbilityType.STRENGTH, 1);
 
         int opponentHitPoints = 10;
 
-        Player opponent = getStandardPlayer(
-            new PlayerOptions(8, opponentHitPoints)
+        Player opponent = getPlayer(
+            getPlayerOptions(8, opponentHitPoints)
         );
 
         attack(player, opponent,20);
@@ -134,10 +134,10 @@ public class PlayerAbilityTests extends AbstractTests {
     @Test
     public void GivenAnOpponentWithDexterity12AndArmorClass10_WhenAttackRollIs10_ThenOpponentIsNotHit() {
 
-        Player player = getStandardPlayer();
+        Player player = getPlayer();
 
-        Player opponent = getStandardPlayer(
-            new PlayerOptions(10, 10)
+        Player opponent = getPlayer(
+            getPlayerOptions(10, 10)
         );
 
         setPlayerAbility(opponent, AbilityType.DEXTERITY, 12);
@@ -154,10 +154,10 @@ public class PlayerAbilityTests extends AbstractTests {
     @Test
     public void GivenAnOpponentWithConstitution20AndArmorClassIs10_WhenAttackRollIs10_ThenHitPointsAre14() {
 
-        Player player = getStandardPlayer();
+        Player player = getPlayer();
 
-        Player opponent = getStandardPlayer(
-            new PlayerOptions(10, 10)
+        Player opponent = getPlayer(
+            getPlayerOptions(10, 10)
         );
 
         // 20 is +5 modifier = 15 hit points
@@ -171,10 +171,10 @@ public class PlayerAbilityTests extends AbstractTests {
     @Test
     public void GivenAnOpponentWithConstitution1AndArmorClassIs10_WhenAttackRollIs10_ThenHitPointsAre4() {
         /*
-        Player player = getStandardPlayer();
+        Player player = getPlayer();
 
-        Player opponent = getStandardPlayer(
-            new PlayerOptions(10, 10)
+        Player opponent = getPlayer(
+            getPlayerOptions(10, 10)
         );
 
         // 1 is -5 modifier = 15 hit points

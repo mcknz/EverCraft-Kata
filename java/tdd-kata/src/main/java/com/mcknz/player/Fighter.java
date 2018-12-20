@@ -2,7 +2,6 @@ package com.mcknz.player;
 
 import com.mcknz.Abilities;
 import com.mcknz.Roll;
-import com.mcknz.player.constants.PlayerOptions;
 
 public class Fighter extends Player {
 
@@ -10,4 +9,13 @@ public class Fighter extends Player {
         super(options, abilities, roll);
     }
 
+    @Override
+    protected int getLevelHitPointIncreaseModulus() {
+        return 1;
+    }
+
+    @Override
+    protected int getLevelHitPointIncrease() {
+        return 10;
+    }
 }

@@ -16,12 +16,14 @@ public class Player {
     private final Abilities abilities;
     private final Roll roll;
     private final Map<ValueType, Integer> values = new HashMap<>();
+    private final PlayerClass playerClass;
 
     public Player(PlayerOptions options, Abilities abilities, Roll roll) {
         this.abilities = abilities;
         this.roll = roll;
         this.name = options.getName();
         this.alignment = options.getAlignment();
+        this.playerClass = options.getPlayerClass();
 
         values.put(ValueType.ARMOR, options.getArmorClass());
         values.put(ValueType.HIT_POINTS, options.getHitPoints());
@@ -41,20 +43,30 @@ public class Player {
         return values.get(type);
     }
 
+    public PlayerClass getPlayerClass() {
+        return this.playerClass;
+    }
+
     public void setAbility(AbilityType type, int score) throws AbilityException {
         abilities.setAbility(type, score);
         for(Map.Entry<ValueType, Integer> entry : values.entrySet()) {
-            entry.setValue(abilities.modify(entry.getKey(), entry.getValue()));
+            entry.setValue(abilities.modify(playerClass, entry.getKey(), entry.getValue()));
         }
     }
 
+    public int getAbilityModifier(AbilityType type) {
+        return abilities.getAbilityModifier(type);
+    }
+
     public boolean attack(Player opponent, int rollValue) throws AbilityException {
-        int modifiedRoll = roll.get(rollValue, getValue(ValueType.LEVEL), getLevelModulus());
-        int opponentArmorClass = opponent.getValue(ValueType.ARMOR);
+        int modifiedRoll = roll.get(rollValue, getValue(ValueType.LEVEL), getLevelHitPointIncreaseModulus());
+        int opponentArmorClass = getArmorClassValue(opponent);
         boolean isHit = modifiedRoll >= opponentArmorClass;
-        int damage = abilities.modify(ValueType.DAMAGE, 1);
+        int damage = abilities.modify(playerClass, ValueType.DAMAGE, 1);
         if(isHit) {
-            opponent.hit(modifiedRoll >= 20, damage);
+            int criticalHitModifier = getCriticalHitModifier();
+            int maxRoll = 20;
+            opponent.hit(modifiedRoll >= maxRoll, damage, criticalHitModifier);
         }
         increaseExperience();
         setLevel();
@@ -65,16 +77,12 @@ public class Player {
         return getValue(ValueType.HIT_POINTS) < 1;
     }
 
-    private int getLevelModulus() {
-        return 2;
-    }
-
-    private void hit(boolean isCriticalHit, int damage) throws AbilityException {
+    private void hit(boolean isCriticalHit, int damage, int criticalHitModifier) {
         if(damage < 1) {
             damage = 1;
         }
         if (isCriticalHit) {
-            damage *= 2;
+            damage *= criticalHitModifier;
         }
         addToValue(ValueType.HIT_POINTS, -damage);
     }
@@ -87,9 +95,25 @@ public class Player {
         int newLevel = Math.floorDiv(experiencePoints, 1000) + 1;
         int oldLevel = getValue(ValueType.LEVEL);
         if(newLevel > oldLevel) {
-            addToValue(ValueType.HIT_POINTS, 5);
+            addToValue(ValueType.HIT_POINTS, getLevelHitPointIncrease());
         }
         setValue(ValueType.LEVEL, newLevel < 1 ? 1 : newLevel);
+    }
+
+    protected int getLevelHitPointIncreaseModulus() {
+        return 2;
+    }
+
+    protected int getLevelHitPointIncrease() {
+        return 5;
+    }
+
+    protected int getCriticalHitModifier() {
+        return 2;
+    }
+
+    protected int getArmorClassValue(Player opponent) {
+        return opponent.getValue(ValueType.ARMOR);
     }
 
     private void increaseExperience() {

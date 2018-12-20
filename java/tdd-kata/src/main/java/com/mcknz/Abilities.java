@@ -3,6 +3,7 @@ package com.mcknz;
 import com.mcknz.abilities.Ability;
 import com.mcknz.abilities.constants.*;
 import com.mcknz.abilities.exceptions.AbilityException;
+import com.mcknz.player.constants.PlayerClass;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -23,11 +24,15 @@ public class Abilities {
         }
     }
 
-    public void setAbility(AbilityType type, int score) throws AbilityException {
+    public void setAbility(AbilityType type, int score) {
         abilities.get(type).set(score);
     }
 
-    public int modify(ValueType type, int value) throws AbilityException {
+    public int getAbilityModifier(AbilityType type) {
+        return abilities.get(type).getModifier();
+    }
+
+    public int modify(PlayerClass playerClass, ValueType type, int value) throws AbilityException {
         String abilityName = "[NONE]";
         try {
             int newValue = value;
@@ -35,8 +40,8 @@ public class Abilities {
                 Ability abilityInstance = ability.getValue();
                 Class<?> abilityClass = abilityInstance.getClass();
                 abilityName = abilityClass.getSimpleName();
-                Method method = abilityClass.getMethod("add", ValueType.class, Integer.TYPE);
-                newValue += (Integer)method.invoke(abilityInstance, type, value);
+                Method method = abilityClass.getMethod("add", PlayerClass.class, ValueType.class, Integer.TYPE);
+                newValue += (Integer)method.invoke(abilityInstance, playerClass, type, value);
             }
             return newValue;
         } catch (Exception ex) {

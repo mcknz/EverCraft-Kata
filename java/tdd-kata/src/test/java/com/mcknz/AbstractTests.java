@@ -2,40 +2,83 @@ package com.mcknz;
 
 import com.mcknz.abilities.constants.AbilityType;
 import com.mcknz.abilities.exceptions.AbilityException;
-import com.mcknz.player.Fighter;
-import com.mcknz.player.Player;
-import com.mcknz.player.constants.PlayerClass;
-import com.mcknz.player.constants.PlayerOptions;
+import com.mcknz.player.*;
+import com.mcknz.player.constants.*;
+import com.mcknz.player.exceptions.AlignmentException;
 
 import static org.junit.Assert.fail;
 
 public abstract class AbstractTests {
 
-    protected Player getStandardPlayer() {
-        return getStandardPlayer(new PlayerOptions(10,10), PlayerClass.PLAYER);
-    }
-
-    protected Player getStandardPlayer(PlayerOptions options) {
-        return getStandardPlayer(options, PlayerClass.PLAYER);
-    }
-
-    protected Player getStandardPlayer(PlayerClass type) {
-        return getStandardPlayer(new PlayerOptions(10,10), type);
-    }
-
-    protected Player getStandardPlayer(PlayerOptions options, PlayerClass type) {
-        Player p = null;
+    protected PlayerOptions getPlayerOptions() {
         try {
-            Abilities abilities = new Abilities();
-            Roll roll = new Roll(abilities);
-            switch(type) {
-                case FIGHTER: p = new Fighter(options, abilities, roll);
-                case PLAYER: p = new Player(options, abilities, roll);
-            }
+            return new PlayerOptions(PlayerClass.PLAYER, 10, 10);
+        } catch(AlignmentException ex) {
+            fail(ex.getMessage());
+        }
+        return null;
+    }
+
+    protected PlayerOptions getPlayerOptions(Alignment alignment) {
+        try {
+            return new PlayerOptions(PlayerClass.PLAYER, alignment, 10, 10);
+        } catch(AlignmentException ex) {
+            fail(ex.getMessage());
+        }
+        return null;
+    }
+
+    protected PlayerOptions getPlayerOptions(PlayerClass playerClass, Alignment alignment) {
+        try {
+            return new PlayerOptions(PlayerClass.PLAYER, alignment);
+        } catch(AlignmentException ex) {
+            fail(ex.getMessage());
+        }
+        return null;
+    }
+
+    protected PlayerOptions getPlayerOptions(String name) {
+        try {
+            return new PlayerOptions(PlayerClass.PLAYER, name, 10, 10);
+        } catch(AlignmentException ex) {
+            fail(ex.getMessage());
+        }
+        return null;
+    }
+
+    protected PlayerOptions getPlayerOptions(int armorClass, int hitPoints) {
+        try {
+            return new PlayerOptions(PlayerClass.PLAYER, armorClass, hitPoints);
+        } catch(AlignmentException ex) {
+            fail(ex.getMessage());
+        }
+        return null;
+    }
+
+    protected PlayerOptions getPlayerOptions(PlayerClass playerClass, int armorClass, int hitPoints) {
+        try {
+            return new PlayerOptions(playerClass, armorClass, hitPoints);
+        } catch(AlignmentException ex) {
+            fail(ex.getMessage());
+        }
+        return null;
+    }
+
+    protected Player getPlayer() {
+        return getPlayer(getPlayerOptions());
+    }
+
+    protected Player getPlayer(PlayerClass playerClass) {
+        return getPlayer(getPlayerOptions(playerClass,10,10));
+    }
+
+    protected Player getPlayer(PlayerOptions options) {
+        try {
+            return new PlayerFactory().getPlayer(options);
         } catch(AbilityException ex) {
             fail(ex.getMessage());
         }
-        return p;
+        return null;
     }
 
     protected boolean attack(Player player, Player opponent, int roll) {
