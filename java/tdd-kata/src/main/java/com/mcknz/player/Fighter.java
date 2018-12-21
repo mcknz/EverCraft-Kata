@@ -1,16 +1,12 @@
-package com.mcknz.player;
+package com.mcknz.player.classes;
 
 import com.mcknz.Abilities;
-import com.mcknz.Roll;
+import com.mcknz.player.classes.PlayerClass;
 
-public class Fighter extends Player {
-
-    public Fighter(PlayerOptions options, Abilities abilities, Roll roll) {
-        super(options, abilities, roll);
-    }
+public class Fighter extends PlayerClass {
 
     @Override
-    protected int[] getLevelHitPointIncreaseModulus() {
+    public int[] getLevelIncreasedAttackModulus() {
         return new int[]{1};
     }
 

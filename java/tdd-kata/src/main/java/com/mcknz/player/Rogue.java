@@ -1,23 +1,18 @@
-package com.mcknz.player;
+package com.mcknz.player.classes;
 
-import com.mcknz.Abilities;
-import com.mcknz.Roll;
 import com.mcknz.abilities.constants.AbilityType;
+import com.mcknz.player.Player;
 
-public class Rogue extends Player {
-
-    public Rogue(PlayerOptions options, Abilities abilities, Roll roll) {
-        super(options, abilities, roll);
-    }
+public class Rogue extends PlayerClass {
 
     @Override
-    protected int getCriticalHitModifier() {
+    public int getCriticalHitModifier() {
         return 3;
     }
 
     @Override
-    protected int getArmorClassValue(Player opponent) {
-        int opponentArmorClass = super.getArmorClassValue(opponent);
+    public int getOpponentArmorClassValue(Player opponent) {
+        int opponentArmorClass = super.getOpponentArmorClassValue(opponent);
         int opponentDexterityModifier = opponent.getAbilityModifier(AbilityType.DEXTERITY);
         if(opponentDexterityModifier > 0) {
             return opponentArmorClass - opponentDexterityModifier;
