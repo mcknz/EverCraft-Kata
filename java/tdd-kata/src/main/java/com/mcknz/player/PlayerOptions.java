@@ -1,7 +1,7 @@
 package com.mcknz.player;
 
 import com.mcknz.player.constants.Alignment;
-import com.mcknz.player.constants.PlayerClass;
+import com.mcknz.player.constants.ClassType;
 import com.mcknz.player.exceptions.AlignmentException;
 
 public class PlayerOptions {
@@ -10,69 +10,73 @@ public class PlayerOptions {
     private final String name;
     private final int armorClass;
     private final int hitPoints;
-    private final PlayerClass playerClass;
+    private final ClassType classType;
 
     public PlayerOptions(String name) throws AlignmentException {
-        this(PlayerClass.PLAYER, name);
+        this(ClassType.PLAYER, name);
     }
 
-    public PlayerOptions(PlayerClass playerClass, String name) throws AlignmentException {
-        this(playerClass, name, Alignment.NEUTRAL);
+    public PlayerOptions(ClassType classType, String name) throws AlignmentException {
+        this(classType, name, Alignment.NEUTRAL);
     }
 
     public PlayerOptions(Alignment alignment) throws AlignmentException {
-        this(PlayerClass.PLAYER, alignment);
+        this(ClassType.PLAYER, alignment);
     }
 
-    public PlayerOptions(PlayerClass playerClass, Alignment alignment) throws AlignmentException {
-        this(playerClass, alignment, 0,0);
+    public PlayerOptions(ClassType classType, Alignment alignment) throws AlignmentException {
+        this(classType, alignment, 0,0);
     }
 
-    public PlayerOptions(PlayerClass playerClass, String name, Alignment alignment) throws AlignmentException {
-        this(playerClass, name, alignment, 0,0);
+    public PlayerOptions(ClassType classType, String name, Alignment alignment) throws AlignmentException {
+        this(classType, name, alignment, 0,0);
+    }
+
+    public PlayerOptions(Alignment alignment, int armorClass, int hitPoints) throws AlignmentException {
+        this(ClassType.PLAYER, alignment, armorClass, hitPoints);
     }
 
     public PlayerOptions(int armorClass, int hitPoints) throws AlignmentException {
-        this(PlayerClass.PLAYER, Alignment.NEUTRAL, armorClass, hitPoints);
+        this(ClassType.PLAYER, Alignment.NEUTRAL, armorClass, hitPoints);
     }
 
-    public PlayerOptions(PlayerClass playerClass, int armorClass, int hitPoints) throws AlignmentException {
-        this(playerClass, Alignment.NEUTRAL, armorClass, hitPoints);
+    public PlayerOptions(ClassType classType, int armorClass, int hitPoints) throws AlignmentException {
+        this(classType, Alignment.NEUTRAL, armorClass, hitPoints);
     }
 
-    public PlayerOptions(PlayerClass playerClass, String name, int armorClass, int hitPoints) throws AlignmentException {
-        this(playerClass, name, Alignment.NEUTRAL, armorClass, hitPoints);
+    public PlayerOptions(ClassType classType, String name, int armorClass, int hitPoints) throws AlignmentException {
+        this(classType, name, Alignment.NEUTRAL, armorClass, hitPoints);
     }
 
-    public PlayerOptions(PlayerClass playerClass,
-                          Alignment alignment,
-                          int armorClass,
-                          int hitPoints) throws AlignmentException {
-        this(playerClass, playerClass.toString(), alignment, armorClass, hitPoints);
+    public PlayerOptions(ClassType classType,
+                         Alignment alignment,
+                         int armorClass,
+                         int hitPoints) throws AlignmentException {
+        this(classType, classType.toString(), alignment, armorClass, hitPoints);
     }
 
-    private PlayerOptions(PlayerClass playerClass,
+    private PlayerOptions(ClassType classType,
                           String name,
                           Alignment alignment,
                           int armorClass,
                           int hitPoints) throws AlignmentException {
-        if(playerClass == PlayerClass.ROGUE && alignment == Alignment.GOOD) {
+        if(classType == ClassType.ROGUE && alignment == Alignment.GOOD) {
             throw new AlignmentException("A Rogue cannot have good alignment.");
         }
-        this.playerClass = playerClass;
+        this.classType = classType;
         this.name = name;
         this.alignment = alignment;
         this.armorClass = armorClass;
         this.hitPoints = hitPoints;
     }
 
-    final PlayerClass getPlayerClass() { return this.playerClass; }
+    public final ClassType getClassType() { return this.classType; }
 
     final String getName() {
         return this.name;
     }
 
-    final Alignment getAlignment() {
+    public final Alignment getAlignment() {
         return this.alignment;
     }
 

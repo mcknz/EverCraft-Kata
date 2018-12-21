@@ -1,7 +1,7 @@
 package com.mcknz.abilities;
 
 import com.mcknz.abilities.constants.*;
-import com.mcknz.player.constants.PlayerClass;
+import com.mcknz.player.PlayerOptions;
 
 import java.util.Arrays;
 import java.util.List;
@@ -39,7 +39,7 @@ public abstract class Ability {
         return scoreModifiers.get(score);
     }
 
-    public int add(PlayerClass playerClass, ValueType type, int value) {
+    public int add(PlayerOptions playerOptions, ValueType type, int value) {
         return 0;
     }
 

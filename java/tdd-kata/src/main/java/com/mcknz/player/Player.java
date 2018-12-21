@@ -1,7 +1,6 @@
 package com.mcknz.player;
 
 import com.mcknz.Abilities;
-import com.mcknz.Roll;
 import com.mcknz.abilities.exceptions.AbilityException;
 import com.mcknz.player.constants.*;
 import com.mcknz.abilities.constants.*;
@@ -14,16 +13,16 @@ public class Player {
     private final String name;
     private final Alignment alignment;
     private final Abilities abilities;
-    private final Roll roll;
     private final Map<ValueType, Integer> values = new HashMap<>();
-    private final PlayerClass playerClass;
+    private final ClassType classType;
+    private final PlayerOptions options;
 
-    public Player(PlayerOptions options, Abilities abilities, Roll roll) {
+    public Player(PlayerOptions options, Abilities abilities) {
         this.abilities = abilities;
-        this.roll = roll;
+        this.options = options;
         this.name = options.getName();
         this.alignment = options.getAlignment();
-        this.playerClass = options.getPlayerClass();
+        this.classType = options.getClassType();
 
         values.put(ValueType.ARMOR, options.getArmorClass());
         values.put(ValueType.HIT_POINTS, options.getHitPoints());
@@ -31,11 +30,7 @@ public class Player {
         values.put(ValueType.LEVEL, 1);
     }
 
-    String getName() {
-        return name;
-    }
-
-    Alignment getAlignment() {
+    public Alignment getAlignment() {
         return alignment;
     }
 
@@ -43,51 +38,30 @@ public class Player {
         return values.get(type);
     }
 
-    public PlayerClass getPlayerClass() {
-        return this.playerClass;
+    public ClassType getClassType() {
+        return this.classType;
+    }
+
+    public int modifyAbilities(ValueType type, int value) throws AbilityException {
+        return abilities.modify(options, type, value);
     }
 
     public void setAbility(AbilityType type, int score) throws AbilityException {
         abilities.setAbility(type, score);
         for(Map.Entry<ValueType, Integer> entry : values.entrySet()) {
-            entry.setValue(abilities.modify(playerClass, entry.getKey(), entry.getValue()));
+            entry.setValue(abilities.modify(options, entry.getKey(), entry.getValue()));
         }
     }
 
-    public int getAbilityModifier(AbilityType type) {
-        return abilities.getAbilityModifier(type);
+    public void applyDamage(int value) {
+        addToValue(ValueType.HIT_POINTS, -value);
     }
 
-    public boolean attack(Player opponent, int rollValue) throws AbilityException {
-        int modifiedRoll = roll.get(rollValue, getValue(ValueType.LEVEL), getLevelHitPointIncreaseModulus());
-        int opponentArmorClass = getArmorClassValue(opponent);
-        boolean isHit = modifiedRoll >= opponentArmorClass;
-        int damage = abilities.modify(playerClass, ValueType.DAMAGE, getBaseDamage());
-        if(isHit) {
-            int criticalHitModifier = getCriticalHitModifier();
-            int maxRoll = 20;
-            opponent.hit(modifiedRoll >= maxRoll, damage, criticalHitModifier);
-        }
-        increaseExperience();
-        setLevel();
-        return isHit;
+    public void increaseExperience(int value) {
+        addToValue(ValueType.EXPERIENCE_POINTS, value);
     }
 
-    boolean isDead() {
-        return getValue(ValueType.HIT_POINTS) < 1;
-    }
-
-    private void hit(boolean isCriticalHit, int damage, int criticalHitModifier) {
-        if(damage < 1) {
-            damage = 1;
-        }
-        if (isCriticalHit) {
-            damage *= criticalHitModifier;
-        }
-        addToValue(ValueType.HIT_POINTS, -damage);
-    }
-
-    private void setLevel() {
+    public void recalculateLevel() {
         int experiencePoints = getValue(ValueType.EXPERIENCE_POINTS);
         if(experiencePoints < 1000) {
             return;
@@ -100,26 +74,34 @@ public class Player {
         setValue(ValueType.LEVEL, newLevel < 1 ? 1 : newLevel);
     }
 
-    protected int[] getLevelHitPointIncreaseModulus() {
+    public int[] getLevelHitPointIncreaseModulus() {
         return new int[]{2};
     }
+
+    public int getCriticalHitModifier() {
+        return 2;
+    }
+
+    public int getArmorClassValue(Player opponent) {
+        return opponent.getValue(ValueType.ARMOR);
+    }
+
+    public int getBaseDamage() { return 1; }
 
     protected int getLevelHitPointIncrease() {
         return 5;
     }
 
-    protected int getCriticalHitModifier() {
-        return 2;
+    String getName() {
+        return name;
     }
 
-    protected int getArmorClassValue(Player opponent) {
-        return opponent.getValue(ValueType.ARMOR);
+    int getAbilityModifier(AbilityType type) {
+        return abilities.getAbilityModifier(type);
     }
 
-    protected int getBaseDamage() { return 1; }
-
-    private void increaseExperience() {
-        addToValue(ValueType.EXPERIENCE_POINTS, 10);
+    boolean isDead() {
+        return getValue(ValueType.HIT_POINTS) < 1;
     }
 
     private void addToValue(ValueType type, int value) {

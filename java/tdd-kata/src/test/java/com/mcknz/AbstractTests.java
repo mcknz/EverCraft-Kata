@@ -12,7 +12,7 @@ public abstract class AbstractTests {
 
     protected PlayerOptions getPlayerOptions() {
         try {
-            return new PlayerOptions(PlayerClass.PLAYER, 10, 10);
+            return new PlayerOptions(ClassType.PLAYER, 10, 10);
         } catch(AlignmentException ex) {
             fail(ex.getMessage());
         }
@@ -21,7 +21,7 @@ public abstract class AbstractTests {
 
     protected PlayerOptions getPlayerOptions(Alignment alignment) {
         try {
-            return new PlayerOptions(PlayerClass.PLAYER, alignment, 10, 10);
+            return new PlayerOptions(ClassType.PLAYER, alignment, 10, 10);
         } catch(AlignmentException ex) {
             fail(ex.getMessage());
         }
@@ -30,7 +30,7 @@ public abstract class AbstractTests {
 
     protected PlayerOptions getPlayerOptions(String name) {
         try {
-            return new PlayerOptions(PlayerClass.PLAYER, name, 10, 10);
+            return new PlayerOptions(ClassType.PLAYER, name, 10, 10);
         } catch(AlignmentException ex) {
             fail(ex.getMessage());
         }
@@ -39,16 +39,25 @@ public abstract class AbstractTests {
 
     protected PlayerOptions getPlayerOptions(int armorClass, int hitPoints) {
         try {
-            return new PlayerOptions(PlayerClass.PLAYER, armorClass, hitPoints);
+            return new PlayerOptions(ClassType.PLAYER, armorClass, hitPoints);
         } catch(AlignmentException ex) {
             fail(ex.getMessage());
         }
         return null;
     }
 
-    protected PlayerOptions getPlayerOptions(PlayerClass playerClass, int armorClass, int hitPoints) {
+    protected PlayerOptions getPlayerOptions(Alignment alignment, int armorClass, int hitPoints) {
         try {
-            return new PlayerOptions(playerClass, armorClass, hitPoints);
+            return new PlayerOptions(alignment, armorClass, hitPoints);
+        } catch(AlignmentException ex) {
+            fail(ex.getMessage());
+        }
+        return null;
+    }
+
+    protected PlayerOptions getPlayerOptions(ClassType classType, int armorClass, int hitPoints) {
+        try {
+            return new PlayerOptions(classType, armorClass, hitPoints);
         } catch(AlignmentException ex) {
             fail(ex.getMessage());
         }
@@ -59,8 +68,8 @@ public abstract class AbstractTests {
         return getPlayer(getPlayerOptions());
     }
 
-    protected Player getPlayer(PlayerClass playerClass) {
-        return getPlayer(getPlayerOptions(playerClass,10,10));
+    protected Player getPlayer(ClassType classType) {
+        return getPlayer(getPlayerOptions(classType,10,10));
     }
 
     protected Player getPlayer(PlayerOptions options) {
@@ -72,9 +81,9 @@ public abstract class AbstractTests {
         return null;
     }
 
-    protected boolean attack(Player player, Player opponent, int roll) {
+    protected boolean attack(Player player, Player opponent, int rollValue) {
         try {
-            return player.attack(opponent, roll);
+            return new Battle(player, opponent).engage(rollValue);
         } catch (AbilityException ex) {
             fail(ex.getMessage());
             return false;

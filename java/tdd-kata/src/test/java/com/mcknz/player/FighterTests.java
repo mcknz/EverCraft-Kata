@@ -4,7 +4,7 @@ import com.mcknz.AbstractTests;
 import com.mcknz.abilities.constants.AbilityType;
 import com.mcknz.abilities.constants.ValueType;
 import com.mcknz.player.constants.Alignment;
-import com.mcknz.player.constants.PlayerClass;
+import com.mcknz.player.constants.ClassType;
 import com.mcknz.player.exceptions.AlignmentException;
 import org.junit.Rule;
 import org.junit.Test;
@@ -23,8 +23,8 @@ public class FighterTests extends AbstractTests {
     */
     @Test
     public void GivenAFighter_WhenCreated_ThenHasPlayerClassFighter() {
-        Player fighter = getPlayer(PlayerClass.FIGHTER);
-        assertThat(fighter.getPlayerClass(), is(PlayerClass.FIGHTER));
+        Player fighter = getPlayer(ClassType.FIGHTER);
+        assertThat(fighter.getClassType(), is(ClassType.FIGHTER));
     }
 
     /*
@@ -39,7 +39,7 @@ public class FighterTests extends AbstractTests {
     */
     @Test
     public void GivenAFighterWithLevel4_WhenOpponentArmorClassIs10AndRollIs6_ThenOpponentIsHit() {
-        Player fighter = getPlayer(PlayerClass.FIGHTER);
+        Player fighter = getPlayer(ClassType.FIGHTER);
 
         Player opponent = getPlayer(
             getPlayerOptions(10, 10)
@@ -62,7 +62,7 @@ public class FighterTests extends AbstractTests {
     */
     @Test
     public void GivenARogue_WhenGetsCriticalHitOnOpponent_ThenDamageIsTripled() {
-        Player rogue = getPlayer(PlayerClass.ROGUE);
+        Player rogue = getPlayer(ClassType.ROGUE);
 
         Player opponent = getPlayer(
             getPlayerOptions(10, 10)
@@ -83,7 +83,7 @@ public class FighterTests extends AbstractTests {
     */
     @Test
     public void GivenARogue_WhenOpponentHasPositiveDexterity_ThenOpponentDexterityIsIgnored() {
-        Player rogue = getPlayer(PlayerClass.ROGUE);
+        Player rogue = getPlayer(ClassType.ROGUE);
 
         Player opponent = getPlayer(
             getPlayerOptions(10, 10)
@@ -105,7 +105,7 @@ public class FighterTests extends AbstractTests {
     */
     @Test
     public void GivenARogue_WhenHasDexterity_ThenAddedToAttacksInsteadOfStrength() {
-        Player rogue = getPlayer(PlayerClass.ROGUE);
+        Player rogue = getPlayer(ClassType.ROGUE);
 
         Player opponent = getPlayer(
             getPlayerOptions(10, 10)
@@ -132,7 +132,7 @@ public class FighterTests extends AbstractTests {
         exceptionRule.expectMessage("Rogue cannot have good alignment.");
         getPlayer(
             new PlayerOptions(
-                PlayerClass.ROGUE,
+                ClassType.ROGUE,
                 Alignment.GOOD)
         );
     }

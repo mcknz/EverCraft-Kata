@@ -3,7 +3,7 @@ package com.mcknz;
 import com.mcknz.abilities.Ability;
 import com.mcknz.abilities.constants.*;
 import com.mcknz.abilities.exceptions.AbilityException;
-import com.mcknz.player.constants.PlayerClass;
+import com.mcknz.player.PlayerOptions;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -32,7 +32,7 @@ public class Abilities {
         return abilities.get(type).getModifier();
     }
 
-    public int modify(PlayerClass playerClass, ValueType type, int value) throws AbilityException {
+    public int modify(PlayerOptions playerOptions, ValueType type, int value) throws AbilityException {
         String abilityName = "[NONE]";
         try {
             int newValue = value;
@@ -40,8 +40,8 @@ public class Abilities {
                 Ability abilityInstance = ability.getValue();
                 Class<?> abilityClass = abilityInstance.getClass();
                 abilityName = abilityClass.getSimpleName();
-                Method method = abilityClass.getMethod("add", PlayerClass.class, ValueType.class, Integer.TYPE);
-                newValue += (Integer)method.invoke(abilityInstance, playerClass, type, value);
+                Method method = abilityClass.getMethod("add", PlayerOptions.class, ValueType.class, Integer.TYPE);
+                newValue += (Integer)method.invoke(abilityInstance, playerOptions, type, value);
             }
             return newValue;
         } catch (Exception ex) {

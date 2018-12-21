@@ -1,9 +1,13 @@
-package com.mcknz.player.classes;
+package com.mcknz.player;
 
+import com.mcknz.Abilities;
 import com.mcknz.abilities.constants.AbilityType;
-import com.mcknz.player.Player;
 
-public class Rogue extends PlayerClass {
+public class Rogue extends Player {
+
+    public Rogue(PlayerOptions options, Abilities abilities) {
+        super(options, abilities);
+    }
 
     @Override
     public int getCriticalHitModifier() {
@@ -11,8 +15,8 @@ public class Rogue extends PlayerClass {
     }
 
     @Override
-    public int getOpponentArmorClassValue(Player opponent) {
-        int opponentArmorClass = super.getOpponentArmorClassValue(opponent);
+    public int getArmorClassValue(Player opponent) {
+        int opponentArmorClass = super.getArmorClassValue(opponent);
         int opponentDexterityModifier = opponent.getAbilityModifier(AbilityType.DEXTERITY);
         if(opponentDexterityModifier > 0) {
             return opponentArmorClass - opponentDexterityModifier;

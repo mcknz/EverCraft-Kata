@@ -1,19 +1,13 @@
 package com.mcknz.player.constants;
 
-public enum PlayerClassType {
-    DEFAULT("Default"),
-    FIGHTER("Fighter"),
-    MONK("Monk"),
-    PALADIN("Paladin"),
-    ROGUE("Rogue");
+public enum ClassType {
+    FIGHTER,
+    MONK,
+    PALADIN,
+    PLAYER,
+    ROGUE;
 
-    private final String val;
-
-    PlayerClassType(String value) {
-        this.val = value;
-    }
-
-    public String value() {
-        return val;
+    public String toString() {
+        return name().charAt(0) + name().substring(1).toLowerCase();
     }
 }

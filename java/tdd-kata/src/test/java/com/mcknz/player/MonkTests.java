@@ -3,12 +3,8 @@ package com.mcknz.player;
 import com.mcknz.AbstractTests;
 import com.mcknz.abilities.constants.AbilityType;
 import com.mcknz.abilities.constants.ValueType;
-import com.mcknz.player.constants.Alignment;
-import com.mcknz.player.constants.PlayerClass;
-import com.mcknz.player.exceptions.AlignmentException;
-import org.junit.Rule;
+import com.mcknz.player.constants.ClassType;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -22,8 +18,8 @@ public class MonkTests extends AbstractTests {
     */
     @Test
     public void GivenAMonk_WhenCreated_ThenHasPlayerClassMonk() {
-        Player monk = getPlayer(PlayerClass.MONK);
-        assertThat(monk.getPlayerClass(), is(PlayerClass.MONK));
+        Player monk = getPlayer(ClassType.MONK);
+        assertThat(monk.getClassType(), is(ClassType.MONK));
     }
 
     /*
@@ -38,7 +34,7 @@ public class MonkTests extends AbstractTests {
     @Test
     public void GivenAMonk_WhenLevel2_ThenHasSixAdditionalHitPoints() {
 
-        Player monk = getPlayer(PlayerClass.MONK);
+        Player monk = getPlayer(ClassType.MONK);
 
         Player opponent = getPlayer(
             getPlayerOptions(10, 10)
@@ -61,7 +57,7 @@ public class MonkTests extends AbstractTests {
     @Test
     public void GivenAMonk_WhenHitsOpponent_ThenDoes3PointsOfDamage() {
 
-        Player monk = getPlayer(PlayerClass.MONK);
+        Player monk = getPlayer(ClassType.MONK);
 
         Player opponent = getPlayer(
             getPlayerOptions(10, 10)
@@ -84,7 +80,7 @@ public class MonkTests extends AbstractTests {
     @Test
     public void GivenAMonk_WhenHasPositiveWisdom_ThenModifierAddedToArmorClass() {
 
-        Player monk = getPlayer(PlayerClass.MONK);
+        Player monk = getPlayer(ClassType.MONK);
 
         setPlayerAbility(monk, AbilityType.WISDOM, 15);
 
@@ -103,7 +99,7 @@ public class MonkTests extends AbstractTests {
     @Test
     public void GivenAMonk_WhenLevel6_ThenAttackRollIsIncreasedBy5() {
 
-        Player monk = getPlayer(PlayerClass.MONK);
+        Player monk = getPlayer(ClassType.MONK);
 
         Player opponent = getPlayer(
             getPlayerOptions(10, 10)
