@@ -11,6 +11,7 @@ public class PlayerFactory {
         Roll roll = new Roll(options.getPlayerClass(), abilities);
         switch(options.getPlayerClass()) {
             case FIGHTER: return new Fighter(options, abilities, roll);
+            case MONK: return new Monk(options, abilities, roll);
             case ROGUE: return new Rogue(options, abilities, roll);
         }
         return new Player(options, abilities, roll);

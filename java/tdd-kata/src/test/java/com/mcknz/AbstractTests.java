@@ -28,15 +28,6 @@ public abstract class AbstractTests {
         return null;
     }
 
-    protected PlayerOptions getPlayerOptions(PlayerClass playerClass, Alignment alignment) {
-        try {
-            return new PlayerOptions(PlayerClass.PLAYER, alignment);
-        } catch(AlignmentException ex) {
-            fail(ex.getMessage());
-        }
-        return null;
-    }
-
     protected PlayerOptions getPlayerOptions(String name) {
         try {
             return new PlayerOptions(PlayerClass.PLAYER, name, 10, 10);
@@ -95,6 +86,15 @@ public abstract class AbstractTests {
             player.setAbility(type, score);
         } catch (AbilityException ex) {
             fail(ex.getMessage());
+        }
+    }
+
+    protected void setPlayerLevel(Player player, Player opponent, int level) {
+        if(level == 1) {
+            return;
+        }
+        for(int i = 0; i < (level - 1) * 100; i++ ) {
+            attack(player, opponent, 19);
         }
     }
 }

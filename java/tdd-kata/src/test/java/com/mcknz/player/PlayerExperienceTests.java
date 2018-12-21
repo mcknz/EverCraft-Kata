@@ -60,9 +60,7 @@ public class PlayerExperienceTests extends AbstractTests {
             getPlayerOptions(10, 10)
         );
 
-        for(int i = 0; i < 100; i++ ) {
-            attack(player, opponent, 19);
-        }
+        setPlayerLevel(player, opponent, 2);
 
         assertThat(player.getValue(ValueType.LEVEL), is(2));
     }
@@ -75,7 +73,7 @@ public class PlayerExperienceTests extends AbstractTests {
                 - hit points increase by 5 plus Con modifier
      */
     @Test
-    public void GivenAPlayerWith20Constitution_WhenPlayerHitsOpponent200Times_ThenHitPointsAre25() {
+    public void GivenAPlayerWith20Constitution_WhenPlayerIsLevel3_ThenHitPointsAre25() {
         Player player = getPlayer();
         setPlayerAbility(player, AbilityType.CONSTITUTION, 20);
 
@@ -83,9 +81,7 @@ public class PlayerExperienceTests extends AbstractTests {
             getPlayerOptions(10, 10)
         );
 
-        for(int i = 0; i < 200; i++ ) {
-            attack(player, opponent, 19);
-        }
+        setPlayerLevel(player, opponent, 3);
 
         assertThat(player.getValue(ValueType.HIT_POINTS), is(25));
     }
@@ -104,9 +100,7 @@ public class PlayerExperienceTests extends AbstractTests {
             getPlayerOptions(10, 10)
         );
 
-        for(int i = 0; i < 300; i++ ) {
-            attack(player, opponent, 19);
-        }
+        setPlayerLevel(player, opponent, 4);
 
         assertThat(attack(player, opponent, 8), is(true));
     }

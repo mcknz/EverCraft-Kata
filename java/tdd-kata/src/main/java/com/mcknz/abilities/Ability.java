@@ -17,17 +17,15 @@ public abstract class Ability {
         this.score = score;
     }
 
-    abstract AbilityType getType();
-
     private final List<Integer> scoreModifiers = Arrays.asList(
         -999, -5, -4, -4, -3, -3, -2, -2, -1, -1, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5
     );
 
-    public int getScore() {
+    int getScore() {
         return score;
     }
 
-    public void change(int value) {
+    void change(int value) {
         score+=value;
         validateScore();
     }
@@ -45,7 +43,7 @@ public abstract class Ability {
         return 0;
     }
 
-    private int validateScore() {
+    private void validateScore() {
         if(score > 20) {
             score = 20;
         } else {
@@ -53,6 +51,5 @@ public abstract class Ability {
                 score = 1;
             }
         }
-        return score;
     }
 }

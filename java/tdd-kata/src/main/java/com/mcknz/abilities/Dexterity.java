@@ -6,11 +6,6 @@ import com.mcknz.player.constants.PlayerClass;
 public class Dexterity extends Ability {
 
     @Override
-    AbilityType getType() {
-        return AbilityType.DEXTERITY;
-    }
-
-    @Override
     public int add(PlayerClass playerClass, ValueType type, int value) {
         switch(type) {
             case ARMOR:

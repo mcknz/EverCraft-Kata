@@ -14,10 +14,12 @@ public class Roll {
         this.playerClass = playerClass;
     }
 
-    public int get(int roll, int level, int modulus) throws AbilityException {
+    public int get(int roll, int level, int[] modulus) throws AbilityException {
         int newRoll = roll;
-        if(level % modulus == 0) {
-            newRoll += (level / modulus);
+        for (int mod : modulus) {
+            if(level % mod == 0) {
+                newRoll += (level / mod);
+            }
         }
         return abilities.modify(playerClass, ValueType.ROLL, newRoll);
     }

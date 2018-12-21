@@ -62,7 +62,7 @@ public class Player {
         int modifiedRoll = roll.get(rollValue, getValue(ValueType.LEVEL), getLevelHitPointIncreaseModulus());
         int opponentArmorClass = getArmorClassValue(opponent);
         boolean isHit = modifiedRoll >= opponentArmorClass;
-        int damage = abilities.modify(playerClass, ValueType.DAMAGE, 1);
+        int damage = abilities.modify(playerClass, ValueType.DAMAGE, getBaseDamage());
         if(isHit) {
             int criticalHitModifier = getCriticalHitModifier();
             int maxRoll = 20;
@@ -100,8 +100,8 @@ public class Player {
         setValue(ValueType.LEVEL, newLevel < 1 ? 1 : newLevel);
     }
 
-    protected int getLevelHitPointIncreaseModulus() {
-        return 2;
+    protected int[] getLevelHitPointIncreaseModulus() {
+        return new int[]{2};
     }
 
     protected int getLevelHitPointIncrease() {
@@ -115,6 +115,8 @@ public class Player {
     protected int getArmorClassValue(Player opponent) {
         return opponent.getValue(ValueType.ARMOR);
     }
+
+    protected int getBaseDamage() { return 1; }
 
     private void increaseExperience() {
         addToValue(ValueType.EXPERIENCE_POINTS, 10);
