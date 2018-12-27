@@ -9,7 +9,7 @@ public class Monk extends Player {
     }
 
     @Override
-    public int[] getLevelHitPointIncreaseModulus() {
+    public int[] getLevelRollIncreaseModulus() {
         return new int[] {2, 3};
     }
 
@@ -19,7 +19,7 @@ public class Monk extends Player {
     }
 
     @Override
-    public int getBaseDamage() {
+    public int getBaseDamage(Player opponent) {
         return 3;
     }
 }

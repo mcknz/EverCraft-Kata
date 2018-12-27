@@ -9,7 +9,7 @@ public class Fighter extends Player {
     }
 
     @Override
-    public int[] getLevelHitPointIncreaseModulus() {
+    public int[] getLevelRollIncreaseModulus() {
         return new int[]{1};
     }
 

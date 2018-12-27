@@ -98,6 +98,13 @@ public abstract class AbstractTests {
         }
     }
 
+    protected void setPlayerLevel(Player player, int level) {
+        Player opponent = getPlayer(
+            getPlayerOptions(10,10)
+        );
+        setPlayerLevel(player, opponent, level);
+    }
+
     protected void setPlayerLevel(Player player, Player opponent, int level) {
         if(level == 1) {
             return;
@@ -106,4 +113,6 @@ public abstract class AbstractTests {
             attack(player, opponent, 19);
         }
     }
+
+
 }

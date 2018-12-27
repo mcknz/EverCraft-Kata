@@ -74,11 +74,11 @@ public class Player {
         setValue(ValueType.LEVEL, newLevel < 1 ? 1 : newLevel);
     }
 
-    public int[] getLevelHitPointIncreaseModulus() {
+    public int[] getLevelRollIncreaseModulus() {
         return new int[]{2};
     }
 
-    public int getCriticalHitModifier() {
+    public int getCriticalHitModifier(Player opponent) {
         return 2;
     }
 
@@ -86,7 +86,9 @@ public class Player {
         return opponent.getValue(ValueType.ARMOR);
     }
 
-    public int getBaseDamage() { return 1; }
+    public int getBaseDamage(Player opponent) { return 1; }
+
+    public int getRollIncrease(Player opponent) { return 0; }
 
     protected int getLevelHitPointIncrease() {
         return 5;

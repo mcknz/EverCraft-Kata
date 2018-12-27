@@ -10,7 +10,7 @@ public class Rogue extends Player {
     }
 
     @Override
-    public int getCriticalHitModifier() {
+    public int getCriticalHitModifier(Player opponent) {
         return 3;
     }
 

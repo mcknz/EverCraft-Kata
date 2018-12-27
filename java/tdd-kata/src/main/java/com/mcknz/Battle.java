@@ -3,7 +3,6 @@ package com.mcknz;
 import com.mcknz.abilities.constants.ValueType;
 import com.mcknz.abilities.exceptions.AbilityException;
 import com.mcknz.player.Player;
-import com.mcknz.player.constants.*;
 
 class Battle {
 
@@ -19,13 +18,13 @@ class Battle {
         int modifiedRoll = modifyRollValue(rollValue);
         int opponentArmorClass = player.getArmorClassValue(opponent);
         boolean isHit = modifiedRoll >= opponentArmorClass;
-        int damage = player.modifyAbilities(ValueType.DAMAGE, player.getBaseDamage());
         if(isHit) {
+            int damage = player.modifyAbilities(ValueType.DAMAGE, player.getBaseDamage(opponent));
             int maxRoll = 20;
             hit(modifiedRoll >= maxRoll, damage);
+            player.increaseExperience(10);
+            player.recalculateLevel();
         }
-        player.increaseExperience(10);
-        player.recalculateLevel();
         return isHit;
     }
 
@@ -35,25 +34,25 @@ class Battle {
             damage = 1;
         }
         if (isCriticalHit) {
-            damage *= player.getCriticalHitModifier();
-        }
-        if(opponent.getClassType() == ClassType.PALADIN
-            && player.getAlignment() == Alignment.EVIL) {
-            damage += 2;
+            damage *= player.getCriticalHitModifier(opponent);
         }
         opponent.applyDamage(damage);
     }
 
     private int modifyRollValue(int value) throws AbilityException {
         int level = player.getValue(ValueType.LEVEL);
-        int[] modulus = player.getLevelHitPointIncreaseModulus();
-
         int newRoll = value;
-        for (int mod : modulus) {
-            if(level % mod == 0) {
-                newRoll += (level / mod);
+
+        if(level > 1) {
+            int[] modulus = player.getLevelRollIncreaseModulus();
+            for (int mod : modulus) {
+                if (level % mod == 0) {
+                    newRoll += (level / mod);
+                }
             }
         }
-        return player.modifyAbilities(ValueType.ROLL, newRoll);
+
+        newRoll = player.modifyAbilities(ValueType.ROLL, newRoll);
+        return newRoll + player.getRollIncrease(opponent);
     }
 }

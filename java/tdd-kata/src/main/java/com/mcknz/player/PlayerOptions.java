@@ -63,6 +63,9 @@ public class PlayerOptions {
         if(classType == ClassType.ROGUE && alignment == Alignment.GOOD) {
             throw new AlignmentException("A Rogue cannot have good alignment.");
         }
+        if(classType == ClassType.PALADIN && alignment != Alignment.GOOD) {
+            throw new AlignmentException("A Paladin must have good alignment.");
+        }
         this.classType = classType;
         this.name = name;
         this.alignment = alignment;
