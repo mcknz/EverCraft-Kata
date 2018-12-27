@@ -32,7 +32,7 @@ public class Abilities {
         return abilities.get(type).getModifier();
     }
 
-    public int modify(PlayerOptions playerOptions, ValueType type, int value) throws AbilityException {
+    public int modifyValueType(PlayerOptions playerOptions, ValueType type, int value) throws AbilityException {
         String abilityName = "[NONE]";
         try {
             int newValue = value;

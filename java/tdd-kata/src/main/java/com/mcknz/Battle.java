@@ -19,7 +19,7 @@ class Battle {
         int opponentArmorClass = player.getArmorClassValue(opponent);
         boolean isHit = modifiedRoll >= opponentArmorClass;
         if(isHit) {
-            int damage = player.modifyAbilities(ValueType.DAMAGE, player.getBaseDamage(opponent));
+            int damage = player.modifyUsingAbilities(ValueType.DAMAGE, player.getBaseDamage(opponent));
             int maxRoll = 20;
             hit(modifiedRoll >= maxRoll, damage);
             player.increaseExperience(10);
@@ -52,7 +52,7 @@ class Battle {
             }
         }
 
-        newRoll = player.modifyAbilities(ValueType.ROLL, newRoll);
+        newRoll = player.modifyUsingAbilities(ValueType.ROLL, newRoll);
         return newRoll + player.getRollIncrease(opponent);
     }
 }

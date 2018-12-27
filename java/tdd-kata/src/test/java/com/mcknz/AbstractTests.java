@@ -55,9 +55,9 @@ public abstract class AbstractTests {
         return null;
     }
 
-    protected PlayerOptions getPlayerOptions(ClassType classType, int armorClass, int hitPoints) {
+    protected PlayerOptions getPlayerOptions(ClassType classType, Alignment alignment) {
         try {
-            return new PlayerOptions(classType, armorClass, hitPoints);
+            return new PlayerOptions(classType, alignment, 10, 10);
         } catch(AlignmentException ex) {
             fail(ex.getMessage());
         }
@@ -69,7 +69,7 @@ public abstract class AbstractTests {
     }
 
     protected Player getPlayer(ClassType classType) {
-        return getPlayer(getPlayerOptions(classType,10,10));
+        return getPlayer(getPlayerOptions(classType, Alignment.NEUTRAL));
     }
 
     protected Player getPlayer(PlayerOptions options) {

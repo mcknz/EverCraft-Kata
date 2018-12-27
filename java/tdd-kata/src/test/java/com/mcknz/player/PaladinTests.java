@@ -14,6 +14,10 @@ import static org.junit.Assert.assertThat;
 
 public class PaladinTests extends AbstractTests {
 
+    Player getPaladin() {
+        return getPlayer(getPlayerOptions(ClassType.PALADIN, Alignment.GOOD));
+    }
+
     /*
     Feature: Characters Have Classes
         As a player I want a character to have a class that customizes its capabilities
@@ -21,8 +25,8 @@ public class PaladinTests extends AbstractTests {
     */
     @Test
     public void GivenAPaladin_WhenCreated_ThenHasPlayerClassPaladin() {
-        Player monk = getPlayer(ClassType.PALADIN);
-        assertThat(monk.getClassType(), is(ClassType.PALADIN));
+        Player paladin = getPaladin();
+        assertThat(paladin.getClassType(), is(ClassType.PALADIN));
     }
 
     /*
@@ -37,7 +41,7 @@ public class PaladinTests extends AbstractTests {
     @Test
     public void GivenAPaladin_WhenLevel2_ThenHasEightAdditionalHitPoints() {
 
-        Player paladin = getPlayer(ClassType.PALADIN);
+        Player paladin = getPaladin();
 
         Player opponent = getPlayer(
             getPlayerOptions(10, 10)
@@ -60,7 +64,7 @@ public class PaladinTests extends AbstractTests {
     @Test
     public void GivenAPaladin_WhenAttackingEvilPlayer_ThenDoesPlusTwoDamageAndAttack() {
 
-        Player paladin = getPlayer(ClassType.PALADIN);
+        Player paladin = getPaladin();
 
         Player opponent = getPlayer(
             getPlayerOptions(Alignment.EVIL, 10,10)
@@ -83,7 +87,7 @@ public class PaladinTests extends AbstractTests {
     @Test
     public void GivenAPaladin_WhenAttackingNeutralPlayer_ThenDoesNormalDamageAndAttack() {
 
-        Player paladin = getPlayer(ClassType.PALADIN);
+        Player paladin = getPaladin();
 
         Player opponent = getPlayer(
             getPlayerOptions(Alignment.NEUTRAL, 10,10)
@@ -107,7 +111,7 @@ public class PaladinTests extends AbstractTests {
     @Test
     public void GivenAPaladin_WhenMakesCriticalHit_ThenDoesThreeTimesDamage() {
 
-        Player paladin = getPlayer(ClassType.PALADIN);
+        Player paladin = getPaladin();
 
         Player opponent = getPlayer(
             getPlayerOptions(Alignment.EVIL, 10,10)
@@ -130,7 +134,7 @@ public class PaladinTests extends AbstractTests {
     @Test
     public void GivenAPaladin_WhenAttacking_ThenRollIsIncreasedByOneForEveryLevel() {
 
-        Player paladin = getPlayer(ClassType.PALADIN);
+        Player paladin = getPaladin();
 
         setPlayerLevel(paladin, 3);
 

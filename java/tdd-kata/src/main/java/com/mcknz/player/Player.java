@@ -42,14 +42,14 @@ public class Player {
         return this.classType;
     }
 
-    public int modifyAbilities(ValueType type, int value) throws AbilityException {
-        return abilities.modify(options, type, value);
+    public int modifyUsingAbilities(ValueType type, int value) throws AbilityException {
+        return abilities.modifyValueType(options, type, value);
     }
 
     public void setAbility(AbilityType type, int score) throws AbilityException {
         abilities.setAbility(type, score);
         for(Map.Entry<ValueType, Integer> entry : values.entrySet()) {
-            entry.setValue(abilities.modify(options, entry.getKey(), entry.getValue()));
+            entry.setValue(abilities.modifyValueType(options, entry.getKey(), entry.getValue()));
         }
     }
 
