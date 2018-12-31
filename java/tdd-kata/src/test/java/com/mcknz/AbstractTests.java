@@ -5,6 +5,7 @@ import com.mcknz.abilities.exceptions.AbilityException;
 import com.mcknz.player.*;
 import com.mcknz.player.constants.*;
 import com.mcknz.player.exceptions.AlignmentException;
+import com.mcknz.player.constants.RaceType;
 
 import static org.junit.Assert.fail;
 
@@ -12,7 +13,7 @@ public abstract class AbstractTests {
 
     protected PlayerOptions getPlayerOptions() {
         try {
-            return new PlayerOptions(ClassType.PLAYER, 10, 10);
+            return new PlayerOptions(ClassType.PLAYER, RaceType.HUMAN, 10, 10);
         } catch(AlignmentException ex) {
             fail(ex.getMessage());
         }
@@ -21,7 +22,7 @@ public abstract class AbstractTests {
 
     protected PlayerOptions getPlayerOptions(Alignment alignment) {
         try {
-            return new PlayerOptions(ClassType.PLAYER, alignment, 10, 10);
+            return new PlayerOptions(ClassType.PLAYER, RaceType.HUMAN, alignment, 10, 10);
         } catch(AlignmentException ex) {
             fail(ex.getMessage());
         }
@@ -30,7 +31,7 @@ public abstract class AbstractTests {
 
     protected PlayerOptions getPlayerOptions(String name) {
         try {
-            return new PlayerOptions(ClassType.PLAYER, name, 10, 10);
+            return new PlayerOptions(ClassType.PLAYER, RaceType.HUMAN, name, 10, 10);
         } catch(AlignmentException ex) {
             fail(ex.getMessage());
         }
@@ -39,7 +40,7 @@ public abstract class AbstractTests {
 
     protected PlayerOptions getPlayerOptions(int armorClass, int hitPoints) {
         try {
-            return new PlayerOptions(ClassType.PLAYER, armorClass, hitPoints);
+            return new PlayerOptions(ClassType.PLAYER, RaceType.HUMAN, armorClass, hitPoints);
         } catch(AlignmentException ex) {
             fail(ex.getMessage());
         }
@@ -57,7 +58,34 @@ public abstract class AbstractTests {
 
     protected PlayerOptions getPlayerOptions(ClassType classType, Alignment alignment) {
         try {
-            return new PlayerOptions(classType, alignment, 10, 10);
+            return new PlayerOptions(classType, RaceType.HUMAN,  alignment, 10, 10);
+        } catch(AlignmentException ex) {
+            fail(ex.getMessage());
+        }
+        return null;
+    }
+
+    protected PlayerOptions getPlayerOptions(RaceType raceType, Alignment alignment) {
+        try {
+            return new PlayerOptions(ClassType.PLAYER, raceType, alignment, 10, 10);
+        } catch(AlignmentException ex) {
+            fail(ex.getMessage());
+        }
+        return null;
+    }
+
+    protected PlayerOptions getPlayerOptions(RaceType raceType, int armorClass) {
+        try {
+            return new PlayerOptions(ClassType.PLAYER, raceType, Alignment.NEUTRAL, armorClass, 10);
+        } catch(AlignmentException ex) {
+            fail(ex.getMessage());
+        }
+        return null;
+    }
+
+    protected PlayerOptions getPlayerOptions(RaceType raceType, int armorClass, int hitPoints) {
+        try {
+            return new PlayerOptions(ClassType.PLAYER, raceType, Alignment.NEUTRAL, armorClass, hitPoints);
         } catch(AlignmentException ex) {
             fail(ex.getMessage());
         }
@@ -70,6 +98,18 @@ public abstract class AbstractTests {
 
     protected Player getPlayer(ClassType classType) {
         return getPlayer(getPlayerOptions(classType, Alignment.NEUTRAL));
+    }
+
+    protected Player getPlayer(RaceType raceType) {
+        return getPlayer(getPlayerOptions(raceType, Alignment.NEUTRAL));
+    }
+
+    protected Player getPlayer(RaceType raceType, int armorClass) {
+        return getPlayer(getPlayerOptions(raceType, armorClass));
+    }
+
+    protected Player getPlayer(RaceType raceType, int armorClass, int hitPoints) {
+        return getPlayer(getPlayerOptions(raceType, armorClass, hitPoints));
     }
 
     protected Player getPlayer(PlayerOptions options) {

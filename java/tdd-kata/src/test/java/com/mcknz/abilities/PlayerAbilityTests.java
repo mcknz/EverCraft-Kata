@@ -2,7 +2,6 @@ package com.mcknz.abilities;
 
 import com.mcknz.abilities.constants.*;
 import com.mcknz.player.Player;
-import com.mcknz.player.PlayerOptions;
 import com.mcknz.AbstractTests;
 import org.junit.Test;
 
@@ -105,8 +104,6 @@ public class PlayerAbilityTests extends AbstractTests {
             so that I can vanquish my enemy with extreme prejudice
                 - add Strength modifier to:
                     -  minimum damage is always 1 (even on a critical hit)
-                - add Dexterity modifier to armor class
-                - add Constitution modifier to hit points (always at least 1 hit point)
     */
     @Test
     public void GivenAPlayerWithStrength1_WhenOpponentIsHitWith20Roll_ThenOpponentLoses1HitPoint() {

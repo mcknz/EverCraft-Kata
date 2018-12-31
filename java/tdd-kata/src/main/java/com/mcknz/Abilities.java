@@ -13,11 +13,11 @@ public class Abilities {
 
     private Map<AbilityType, Ability> abilities = new HashMap<>();
 
-    public Abilities() throws AbilityException {
+    public Abilities(PlayerOptions playerOptions) throws AbilityException {
         try {
             for (AbilityType type : AbilityType.values()) {
                 Class<?> clazz = Class.forName("com.mcknz.abilities." + type.value());
-                abilities.put(type, (Ability) clazz.getConstructor().newInstance());
+                abilities.put(type, (Ability) clazz.getConstructor(PlayerOptions.class).newInstance(playerOptions));
             }
         } catch(Exception ex) {
             throw new AbilityException(ex);
@@ -32,7 +32,9 @@ public class Abilities {
         return abilities.get(type).getModifier();
     }
 
-    public int modifyValueType(PlayerOptions playerOptions, ValueType type, int value) throws AbilityException {
+    public void doubleAbilityModifier(AbilityType type) { abilities.get(type).doubleModifier(); }
+
+    public int modifyValueType(ValueType type, int value) throws AbilityException {
         String abilityName = "[NONE]";
         try {
             int newValue = value;
@@ -40,8 +42,8 @@ public class Abilities {
                 Ability abilityInstance = ability.getValue();
                 Class<?> abilityClass = abilityInstance.getClass();
                 abilityName = abilityClass.getSimpleName();
-                Method method = abilityClass.getMethod("add", PlayerOptions.class, ValueType.class, Integer.TYPE);
-                newValue += (Integer)method.invoke(abilityInstance, playerOptions, type, value);
+                Method method = abilityClass.getMethod("add", ValueType.class, Integer.TYPE);
+                newValue += (Integer)method.invoke(abilityInstance, type, value);
             }
             return newValue;
         } catch (Exception ex) {

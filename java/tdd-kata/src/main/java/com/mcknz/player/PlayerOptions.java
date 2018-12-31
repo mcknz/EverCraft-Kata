@@ -3,6 +3,7 @@ package com.mcknz.player;
 import com.mcknz.player.constants.Alignment;
 import com.mcknz.player.constants.ClassType;
 import com.mcknz.player.exceptions.AlignmentException;
+import com.mcknz.player.constants.RaceType;
 
 public class PlayerOptions {
 
@@ -11,13 +12,22 @@ public class PlayerOptions {
     private final int armorClass;
     private final int hitPoints;
     private final ClassType classType;
+    private final RaceType raceType;
 
     public PlayerOptions(String name) throws AlignmentException {
         this(ClassType.PLAYER, name);
     }
 
     public PlayerOptions(ClassType classType, String name) throws AlignmentException {
-        this(classType, name, Alignment.NEUTRAL);
+        this(classType, RaceType.HUMAN, name, Alignment.NEUTRAL);
+    }
+
+    public PlayerOptions(RaceType raceType, String name) throws AlignmentException {
+        this(ClassType.PLAYER, raceType, name, Alignment.NEUTRAL);
+    }
+
+    public PlayerOptions(ClassType classType, RaceType raceType, String name) throws AlignmentException {
+        this(classType, raceType, name, Alignment.NEUTRAL);
     }
 
     public PlayerOptions(Alignment alignment) throws AlignmentException {
@@ -25,37 +35,39 @@ public class PlayerOptions {
     }
 
     public PlayerOptions(ClassType classType, Alignment alignment) throws AlignmentException {
-        this(classType, alignment, 0,0);
+        this(classType, RaceType.HUMAN, alignment, 0,0);
     }
 
-    public PlayerOptions(ClassType classType, String name, Alignment alignment) throws AlignmentException {
-        this(classType, name, alignment, 0,0);
+    public PlayerOptions(ClassType classType, RaceType raceType, String name, Alignment alignment) throws AlignmentException {
+        this(classType, raceType, name, alignment, 0,0);
     }
 
     public PlayerOptions(Alignment alignment, int armorClass, int hitPoints) throws AlignmentException {
-        this(ClassType.PLAYER, alignment, armorClass, hitPoints);
+        this(ClassType.PLAYER, RaceType.HUMAN, alignment, armorClass, hitPoints);
     }
 
     public PlayerOptions(int armorClass, int hitPoints) throws AlignmentException {
-        this(ClassType.PLAYER, Alignment.NEUTRAL, armorClass, hitPoints);
+        this(ClassType.PLAYER, RaceType.HUMAN, Alignment.NEUTRAL, armorClass, hitPoints);
     }
 
-    public PlayerOptions(ClassType classType, int armorClass, int hitPoints) throws AlignmentException {
-        this(classType, Alignment.NEUTRAL, armorClass, hitPoints);
+    public PlayerOptions(ClassType classType, RaceType raceType, int armorClass, int hitPoints) throws AlignmentException {
+        this(classType, raceType, Alignment.NEUTRAL, armorClass, hitPoints);
     }
 
-    public PlayerOptions(ClassType classType, String name, int armorClass, int hitPoints) throws AlignmentException {
-        this(classType, name, Alignment.NEUTRAL, armorClass, hitPoints);
+    public PlayerOptions(ClassType classType, RaceType raceType, String name, int armorClass, int hitPoints) throws AlignmentException {
+        this(classType, raceType, name, Alignment.NEUTRAL, armorClass, hitPoints);
     }
 
     public PlayerOptions(ClassType classType,
+                         RaceType raceType,
                          Alignment alignment,
                          int armorClass,
                          int hitPoints) throws AlignmentException {
-        this(classType, classType.toString(), alignment, armorClass, hitPoints);
+        this(classType, raceType, classType.toString(), alignment, armorClass, hitPoints);
     }
 
     private PlayerOptions(ClassType classType,
+                          RaceType raceType,
                           String name,
                           Alignment alignment,
                           int armorClass,
@@ -71,6 +83,7 @@ public class PlayerOptions {
         this.alignment = alignment;
         this.armorClass = armorClass;
         this.hitPoints = hitPoints;
+        this.raceType = raceType;
     }
 
     public final ClassType getClassType() { return this.classType; }
@@ -84,10 +97,18 @@ public class PlayerOptions {
     }
 
     final int getArmorClass() {
-        return this.armorClass;
+        int raceTypeModifier = 0;
+        switch(getRaceType()) {
+            case ORC: raceTypeModifier = 2;
+        }
+        return this.armorClass + raceTypeModifier;
     }
 
     final int getHitPoints() {
         return this.hitPoints;
+    }
+
+    public final RaceType getRaceType() {
+        return this.raceType;
     }
 }

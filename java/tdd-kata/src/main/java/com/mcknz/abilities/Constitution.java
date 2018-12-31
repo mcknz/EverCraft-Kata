@@ -5,12 +5,19 @@ import com.mcknz.player.PlayerOptions;
 
 public class Constitution extends Ability {
 
+    public Constitution(PlayerOptions playerOptions) {
+        super(playerOptions);
+        switch (playerOptions.getRaceType()) {
+            case DWARF: set(12);
+        }
+    }
+
     @Override
-    public int add(PlayerOptions playerOptions, ValueType type, int value) {
+    public int add(ValueType type, int value) {
         switch(type) {
             case HIT_POINTS:
                 return this.getModifier();
         }
-        return super.add(playerOptions, type, value);
+        return super.add(type, value);
     }
 }

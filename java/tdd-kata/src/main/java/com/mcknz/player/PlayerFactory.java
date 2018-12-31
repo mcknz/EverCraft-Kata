@@ -6,7 +6,7 @@ import com.mcknz.abilities.exceptions.AbilityException;
 public class PlayerFactory {
 
     public Player getPlayer(PlayerOptions options) throws AbilityException {
-        Abilities abilities = new Abilities();
+        Abilities abilities = new Abilities(options);
         switch(options.getClassType()) {
             case FIGHTER: return new Fighter(options, abilities);
             case MONK: return new Monk(options, abilities);

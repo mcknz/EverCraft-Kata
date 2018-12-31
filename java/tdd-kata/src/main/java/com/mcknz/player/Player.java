@@ -1,6 +1,7 @@
 package com.mcknz.player;
 
 import com.mcknz.Abilities;
+import com.mcknz.abilities.Ability;
 import com.mcknz.abilities.exceptions.AbilityException;
 import com.mcknz.player.constants.*;
 import com.mcknz.abilities.constants.*;
@@ -15,14 +16,14 @@ public class Player {
     private final Abilities abilities;
     private final Map<ValueType, Integer> values = new HashMap<>();
     private final ClassType classType;
-    private final PlayerOptions options;
+    private final RaceType raceType;
 
     public Player(PlayerOptions options, Abilities abilities) {
         this.abilities = abilities;
-        this.options = options;
         this.name = options.getName();
         this.alignment = options.getAlignment();
         this.classType = options.getClassType();
+        this.raceType = options.getRaceType();
 
         values.put(ValueType.ARMOR, options.getArmorClass());
         values.put(ValueType.HIT_POINTS, options.getHitPoints());
@@ -43,13 +44,13 @@ public class Player {
     }
 
     public int modifyUsingAbilities(ValueType type, int value) throws AbilityException {
-        return abilities.modifyValueType(options, type, value);
+        return abilities.modifyValueType(type, value);
     }
 
     public void setAbility(AbilityType type, int score) throws AbilityException {
         abilities.setAbility(type, score);
         for(Map.Entry<ValueType, Integer> entry : values.entrySet()) {
-            entry.setValue(abilities.modifyValueType(options, entry.getKey(), entry.getValue()));
+            entry.setValue(abilities.modifyValueType(entry.getKey(), entry.getValue()));
         }
     }
 
@@ -70,8 +71,11 @@ public class Player {
         int oldLevel = getValue(ValueType.LEVEL);
         if(newLevel > oldLevel) {
             addToValue(ValueType.HIT_POINTS, getLevelHitPointIncrease());
+            if(raceType == RaceType.DWARF) {
+                doubleAbilityModifier(AbilityType.CONSTITUTION);
+            }
         }
-        setValue(ValueType.LEVEL, newLevel < 1 ? 1 : newLevel);
+        setLevelValue(newLevel < 1 ? 1 : newLevel);
     }
 
     public int[] getLevelRollIncreaseModulus() {
@@ -102,6 +106,8 @@ public class Player {
         return abilities.getAbilityModifier(type);
     }
 
+    private void doubleAbilityModifier(AbilityType type) { abilities.doubleAbilityModifier(type); }
+
     boolean isDead() {
         return getValue(ValueType.HIT_POINTS) < 1;
     }
@@ -110,7 +116,11 @@ public class Player {
         values.put(type, getValue(type) + value);
     }
 
-    private void setValue(ValueType type, int value) {
-        values.put(type, value);
+    private void setLevelValue(int value) {
+        values.put(ValueType.LEVEL, value);
+    }
+
+    RaceType getRaceType() {
+        return raceType;
     }
 }

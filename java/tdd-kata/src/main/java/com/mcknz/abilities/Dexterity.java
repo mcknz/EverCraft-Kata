@@ -6,16 +6,20 @@ import com.mcknz.player.constants.ClassType;
 
 public class Dexterity extends Ability {
 
+    public Dexterity(PlayerOptions playerOptions) {
+        super(playerOptions);
+    }
+
     @Override
-    public int add(PlayerOptions playerOptions, ValueType type, int value) {
+    public int add(ValueType type, int value) {
         switch(type) {
             case ARMOR:
                 return this.getModifier();
             case ROLL:
-                if(playerOptions.getClassType() == ClassType.ROGUE) {
+                if(getPlayerOptions().getClassType() == ClassType.ROGUE) {
                     return this.getModifier();
                 }
         }
-        return super.add(playerOptions, type, value);
+        return super.add(type, value);
     }
 }

@@ -1,6 +1,6 @@
 package com.mcknz.abilities;
 
-import com.mcknz.abilities.Intelligence;
+import com.mcknz.AbstractTests;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,7 +14,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 @RunWith(Parameterized.class)
-public class AbilityScoreTests {
+public class AbilityScoreTests extends AbstractTests {
 
     private final int score;
     private final int modifier;
@@ -50,7 +50,7 @@ public class AbilityScoreTests {
 
     @Test
     public void GivenTheIntelligenceAbility_WhenHasScore_ThenModifierIsCorrect() {
-        Intelligence intelligence = new Intelligence();
+        Intelligence intelligence = new Intelligence(getPlayerOptions());
         intelligence.set(score);
         assertThat(intelligence.getModifier(), is(modifier));
     }
