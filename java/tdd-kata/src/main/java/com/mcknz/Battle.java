@@ -3,6 +3,7 @@ package com.mcknz;
 import com.mcknz.abilities.constants.ValueType;
 import com.mcknz.abilities.exceptions.AbilityException;
 import com.mcknz.player.Player;
+import com.mcknz.player.constants.RaceType;
 
 class Battle {
 
@@ -36,6 +37,7 @@ class Battle {
         if (isCriticalHit) {
             damage *= player.getCriticalHitModifier(opponent);
         }
+        damage += player.getAdditionalDamage(opponent);
         opponent.applyDamage(damage);
     }
 
@@ -53,6 +55,14 @@ class Battle {
         }
 
         newRoll = player.modifyUsingAbilities(ValueType.ROLL, newRoll);
+
+        switch(player.getRaceType()) {
+            case DWARF:
+                if(opponent.getRaceType() == RaceType.ORC) {
+                    newRoll += 2;
+                }
+        }
+
         return newRoll + player.getRollIncrease(opponent);
     }
 }

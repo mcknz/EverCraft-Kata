@@ -90,7 +90,20 @@ public class Player {
         return opponent.getValue(ValueType.ARMOR);
     }
 
-    public int getBaseDamage(Player opponent) { return 1; }
+    public int getBaseDamage(Player opponent) {
+        return 1;
+    }
+
+    public int getAdditionalDamage(Player opponent) {
+        int additionalDamage = 0;
+        switch(getRaceType()){
+            case DWARF:
+                if(opponent.getRaceType() == RaceType.ORC) {
+                    additionalDamage += 2;
+                }
+        }
+        return additionalDamage;
+    }
 
     public int getRollIncrease(Player opponent) { return 0; }
 
@@ -120,7 +133,7 @@ public class Player {
         values.put(ValueType.LEVEL, value);
     }
 
-    RaceType getRaceType() {
+    public RaceType getRaceType() {
         return raceType;
     }
 }

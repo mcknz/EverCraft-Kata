@@ -51,7 +51,6 @@ public class DwarfTests extends AbstractTests {
 
     As a player I want to play a Dwarf so that I can drink more than the orc
         - doubles Constitution Modifier when adding to hit points per level (if positive)
-        - +2 bonus to attack/damage when attacking orcs (Dwarves hate Orcs)
     */
     @Test
     public void GivenADwarfWithPlusOneConstitutionModifier_WhenHasLevelThree_ThenHasPlusFourConstitutionModifier() {
@@ -78,7 +77,8 @@ public class DwarfTests extends AbstractTests {
         Player dwarf = getPlayer(RaceType.DWARF, 10);
         Player orc = getPlayer(RaceType.ORC, 10, 10);
 
-        attack(dwarf, orc, 8);
+        // orc has +2 armor, so roll of 10 should boost to hit
+        attack(dwarf, orc, 10);
 
         assertThat(orc.getValue(ValueType.HIT_POINTS), is(7));
     }
