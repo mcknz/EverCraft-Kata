@@ -21,20 +21,26 @@ class Battle {
         boolean isHit = modifiedRoll >= opponentArmorClass;
         if(isHit) {
             int damage = player.modifyUsingAbilities(ValueType.DAMAGE, player.getBaseDamage(opponent));
-            int maxRoll = 20;
-            hit(modifiedRoll >= maxRoll, damage);
+            hit(modifiedRoll, damage);
             player.increaseExperience(10);
             player.recalculateLevel();
         }
         return isHit;
     }
 
-    private void hit(boolean isCriticalHit,
-                     int damage) {
+    private boolean isCriticalHit(int rollValue) {
+        int maxRoll = 20;
+        if(player.getRaceType() == RaceType.ELF && rollValue >= (maxRoll - 1)) {
+            return true;
+        }
+        return rollValue >= maxRoll;
+    }
+
+    private void hit(int rollValue, int damage) {
         if(damage < 1) {
             damage = 1;
         }
-        if (isCriticalHit) {
+        if (isCriticalHit(rollValue)) {
             damage *= player.getCriticalHitModifier(opponent);
         }
         damage += player.getAdditionalDamage(opponent);

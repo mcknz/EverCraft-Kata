@@ -8,7 +8,8 @@ public class Constitution extends Ability {
     public Constitution(PlayerOptions playerOptions) {
         super(playerOptions);
         switch (playerOptions.getRaceType()) {
-            case DWARF: set(12);
+            case DWARF: set(12); break;
+            case ELF: set(9); break;
         }
     }
 

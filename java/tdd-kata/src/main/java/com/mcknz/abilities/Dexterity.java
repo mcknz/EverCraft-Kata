@@ -8,6 +8,9 @@ public class Dexterity extends Ability {
 
     public Dexterity(PlayerOptions playerOptions) {
         super(playerOptions);
+        switch (playerOptions.getRaceType()) {
+            case ELF: set(12);
+        }
     }
 
     @Override

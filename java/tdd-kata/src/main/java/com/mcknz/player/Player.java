@@ -1,7 +1,6 @@
 package com.mcknz.player;
 
 import com.mcknz.Abilities;
-import com.mcknz.abilities.Ability;
 import com.mcknz.abilities.exceptions.AbilityException;
 import com.mcknz.player.constants.*;
 import com.mcknz.abilities.constants.*;
@@ -87,7 +86,12 @@ public class Player {
     }
 
     public int getArmorClassValue(Player opponent) {
-        return opponent.getValue(ValueType.ARMOR);
+        int opponentArmorValue = opponent.getValue(ValueType.ARMOR);
+        if(opponent.getRaceType() == RaceType.ELF
+            && getRaceType() == RaceType.ORC) {
+            opponentArmorValue += 2;
+        }
+        return opponentArmorValue;
     }
 
     public int getBaseDamage(Player opponent) {
