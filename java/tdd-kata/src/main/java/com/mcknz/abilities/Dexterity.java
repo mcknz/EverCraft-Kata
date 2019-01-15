@@ -9,7 +9,8 @@ public class Dexterity extends Ability {
     public Dexterity(PlayerOptions playerOptions) {
         super(playerOptions);
         switch (playerOptions.getRaceType()) {
-            case ELF: set(12);
+            case ELF:
+            case HALFLING: set(12); break;
         }
     }
 

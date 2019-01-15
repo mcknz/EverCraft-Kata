@@ -85,12 +85,22 @@ public class Player {
         return 2;
     }
 
-    public int getArmorClassValue(Player opponent) {
+    public int getOpponentArmorClassValue(Player opponent) {
+
         int opponentArmorValue = opponent.getValue(ValueType.ARMOR);
-        if(opponent.getRaceType() == RaceType.ELF
-            && getRaceType() == RaceType.ORC) {
+
+        boolean isOrcAttackingElf =
+            opponent.getRaceType() == RaceType.ELF
+            && getRaceType() == RaceType.ORC;
+
+        boolean isNonHalflingAttackingHalfling =
+            opponent.getRaceType() == RaceType.HALFLING
+                && getRaceType() != RaceType.HALFLING;
+
+        if(isOrcAttackingElf || isNonHalflingAttackingHalfling) {
             opponentArmorValue += 2;
         }
+
         return opponentArmorValue;
     }
 

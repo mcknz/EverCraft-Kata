@@ -3,14 +3,14 @@ package com.mcknz.abilities;
 import com.mcknz.abilities.constants.*;
 import com.mcknz.player.PlayerOptions;
 import com.mcknz.player.constants.ClassType;
-import com.mcknz.player.constants.RaceType;
 
 public class Strength extends Ability {
 
     public Strength(PlayerOptions playerOptions) {
         super(playerOptions);
         switch (playerOptions.getRaceType()) {
-            case ORC: set(14);
+            case ORC: set(14); break;
+            case HALFLING: set(9); break;
         }
     }
 

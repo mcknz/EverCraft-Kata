@@ -17,7 +17,7 @@ class Battle {
 
     boolean engage(int rollValue) throws AbilityException {
         int modifiedRoll = modifyRollValue(rollValue);
-        int opponentArmorClass = player.getArmorClassValue(opponent);
+        int opponentArmorClass = player.getOpponentArmorClassValue(opponent);
         boolean isHit = modifiedRoll >= opponentArmorClass;
         if(isHit) {
             int damage = player.modifyUsingAbilities(ValueType.DAMAGE, player.getBaseDamage(opponent));

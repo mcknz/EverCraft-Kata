@@ -78,6 +78,9 @@ public class PlayerOptions {
         if(classType == ClassType.PALADIN && alignment != Alignment.GOOD) {
             throw new AlignmentException("A Paladin must have good alignment.");
         }
+        if(raceType == RaceType.HALFLING && alignment == Alignment.EVIL) {
+            throw new AlignmentException("A Halfling cannot have evil alignment.");
+        }
         this.classType = classType;
         this.name = name;
         this.alignment = alignment;

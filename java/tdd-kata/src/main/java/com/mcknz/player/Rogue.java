@@ -15,8 +15,8 @@ public class Rogue extends Player {
     }
 
     @Override
-    public int getArmorClassValue(Player opponent) {
-        int opponentArmorClass = super.getArmorClassValue(opponent);
+    public int getOpponentArmorClassValue(Player opponent) {
+        int opponentArmorClass = super.getOpponentArmorClassValue(opponent);
         int opponentDexterityModifier = opponent.getAbilityModifier(AbilityType.DEXTERITY);
         if(opponentDexterityModifier > 0) {
             return opponentArmorClass - opponentDexterityModifier;
