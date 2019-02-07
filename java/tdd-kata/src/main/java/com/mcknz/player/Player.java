@@ -1,7 +1,11 @@
 package com.mcknz.player;
 
 import com.mcknz.Abilities;
+import com.mcknz.Battle;
+import com.mcknz.constants.ValueType;
 import com.mcknz.abilities.exceptions.AbilityException;
+import com.mcknz.items.armor.*;
+import com.mcknz.items.weapon.*;
 import com.mcknz.player.constants.*;
 import com.mcknz.abilities.constants.*;
 
@@ -16,6 +20,8 @@ public class Player {
     private final Map<ValueType, Integer> values = new HashMap<>();
     private final ClassType classType;
     private final RaceType raceType;
+    private Weapon weapon = new Hands();
+    private Armor armor = new Body();
 
     public Player(PlayerOptions options, Abilities abilities) {
         this.abilities = abilities;
@@ -104,8 +110,13 @@ public class Player {
         return opponentArmorValue;
     }
 
-    public int getBaseDamage(Player opponent) {
-        return 1;
+    public final int getBaseDamage(Battle battle) {
+        int weaponDamage = getWeaponBaseDamage(battle);
+        if(weaponDamage > 0) {
+            return weaponDamage;
+        } else {
+            return getPlayerBaseDamage(battle);
+        }
     }
 
     public int getAdditionalDamage(Player opponent) {
@@ -121,8 +132,36 @@ public class Player {
 
     public int getRollIncrease(Player opponent) { return 0; }
 
+    public RaceType getRaceType() {
+        return raceType;
+    }
+
+    public Weapon getWeapon() {
+        return weapon;
+    }
+
+    public int getWeaponAddedAttack(Battle battle) { return weapon.getAddedAttack(battle); }
+
+    public int getWeaponAddedCriticalHitModifier(Player opponent) { return weapon.getAddedCriticalHitModifier(opponent); }
+
+    public void setWeapon(Weapon weapon) {
+        this.weapon = weapon;
+    }
+
+    public void setArmor(Armor armor) {
+        this.armor = armor;
+    }
+
+    public Armor getArmor() {
+        return this.armor;
+    }
+
     protected int getLevelHitPointIncrease() {
         return 5;
+    }
+
+    protected int getPlayerBaseDamage(Battle battle) {
+        return 1;
     }
 
     String getName() {
@@ -133,11 +172,15 @@ public class Player {
         return abilities.getAbilityModifier(type);
     }
 
-    private void doubleAbilityModifier(AbilityType type) { abilities.doubleAbilityModifier(type); }
-
     boolean isDead() {
         return getValue(ValueType.HIT_POINTS) < 1;
     }
+
+    private int getWeaponBaseDamage(Battle battle) {
+        return weapon.getDamage(battle);
+    }
+
+    private void doubleAbilityModifier(AbilityType type) { abilities.doubleAbilityModifier(type); }
 
     private void addToValue(ValueType type, int value) {
         values.put(type, getValue(type) + value);
@@ -145,9 +188,5 @@ public class Player {
 
     private void setLevelValue(int value) {
         values.put(ValueType.LEVEL, value);
-    }
-
-    public RaceType getRaceType() {
-        return raceType;
     }
 }

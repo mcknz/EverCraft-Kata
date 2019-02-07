@@ -1,11 +1,11 @@
 package com.mcknz;
 
-import com.mcknz.abilities.constants.ValueType;
 import com.mcknz.abilities.exceptions.AbilityException;
+import com.mcknz.constants.ValueType;
 import com.mcknz.player.Player;
 import com.mcknz.player.constants.RaceType;
 
-class Battle {
+public class Battle {
 
     private final Player player;
     private final Player opponent;
@@ -15,12 +15,20 @@ class Battle {
         this.opponent = opponent;
     }
 
+    public Player getPlayer() {
+        return this.player;
+    }
+
+    public Player getOpponent() {
+        return this.opponent;
+    }
+
     boolean engage(int rollValue) throws AbilityException {
         int modifiedRoll = modifyRollValue(rollValue);
         int opponentArmorClass = player.getOpponentArmorClassValue(opponent);
         boolean isHit = modifiedRoll >= opponentArmorClass;
         if(isHit) {
-            int damage = player.modifyUsingAbilities(ValueType.DAMAGE, player.getBaseDamage(opponent));
+            int damage = player.modifyUsingAbilities(ValueType.DAMAGE, player.getBaseDamage(this));
             hit(modifiedRoll, damage);
             player.increaseExperience(10);
             player.recalculateLevel();
@@ -41,7 +49,10 @@ class Battle {
             damage = 1;
         }
         if (isCriticalHit(rollValue)) {
-            damage *= player.getCriticalHitModifier(opponent);
+            damage *= (
+                player.getCriticalHitModifier(opponent)
+                  + player.getWeaponAddedCriticalHitModifier(opponent)
+            );
         }
         damage += player.getAdditionalDamage(opponent);
         opponent.applyDamage(damage);
@@ -68,6 +79,8 @@ class Battle {
                     newRoll += 2;
                 }
         }
+
+        newRoll += player.getWeaponAddedAttack(this);
 
         return newRoll + player.getRollIncrease(opponent);
     }

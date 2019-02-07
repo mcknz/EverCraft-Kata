@@ -1,5 +1,6 @@
 package com.mcknz.abilities;
 
+import com.mcknz.constants.ValueType;
 import com.mcknz.abilities.constants.*;
 import com.mcknz.player.Player;
 import com.mcknz.AbstractTests;

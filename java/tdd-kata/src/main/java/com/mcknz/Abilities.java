@@ -3,6 +3,7 @@ package com.mcknz;
 import com.mcknz.abilities.Ability;
 import com.mcknz.abilities.constants.*;
 import com.mcknz.abilities.exceptions.AbilityException;
+import com.mcknz.constants.ValueType;
 import com.mcknz.player.PlayerOptions;
 
 import java.lang.reflect.Method;

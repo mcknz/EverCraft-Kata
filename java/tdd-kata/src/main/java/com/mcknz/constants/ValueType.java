@@ -1,4 +1,4 @@
-package com.mcknz.abilities.constants;
+package com.mcknz.constants;
 
 public enum ValueType {
     ARMOR,

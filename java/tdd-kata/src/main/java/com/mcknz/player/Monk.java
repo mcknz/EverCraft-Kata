@@ -1,6 +1,7 @@
 package com.mcknz.player;
 
 import com.mcknz.Abilities;
+import com.mcknz.Battle;
 
 public class Monk extends Player {
 
@@ -19,7 +20,7 @@ public class Monk extends Player {
     }
 
     @Override
-    public int getBaseDamage(Player opponent) {
+    public int getPlayerBaseDamage(Battle battle) {
         return 3;
     }
 }

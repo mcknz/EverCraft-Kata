@@ -1,7 +1,7 @@
 package com.mcknz.player;
 
 import com.mcknz.AbstractTests;
-import com.mcknz.abilities.constants.ValueType;
+import com.mcknz.constants.ValueType;
 import com.mcknz.player.constants.Alignment;
 import com.mcknz.player.constants.ClassType;
 import com.mcknz.player.exceptions.AlignmentException;

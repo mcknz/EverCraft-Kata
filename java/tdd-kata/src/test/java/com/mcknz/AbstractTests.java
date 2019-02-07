@@ -2,6 +2,8 @@ package com.mcknz;
 
 import com.mcknz.abilities.constants.AbilityType;
 import com.mcknz.abilities.exceptions.AbilityException;
+import com.mcknz.items.weapon.Waraxe;
+import com.mcknz.items.weapon.Weapon;
 import com.mcknz.player.*;
 import com.mcknz.player.constants.*;
 import com.mcknz.player.exceptions.AlignmentException;
@@ -92,6 +94,15 @@ public abstract class AbstractTests {
         return null;
     }
 
+    protected PlayerOptions getPlayerOptions(ClassType classType, int armorClass, int hitPoints) {
+        try {
+            return new PlayerOptions(classType, RaceType.HUMAN, Alignment.NEUTRAL, armorClass, hitPoints);
+        } catch(AlignmentException ex) {
+            fail(ex.getMessage());
+        }
+        return null;
+    }
+
     protected Player getPlayer() {
         return getPlayer(getPlayerOptions());
     }
@@ -136,6 +147,10 @@ public abstract class AbstractTests {
         } catch (AbilityException ex) {
             fail(ex.getMessage());
         }
+    }
+
+    protected void setWaraxe(Player player) {
+        player.setWeapon(new Waraxe(2));
     }
 
     protected void setPlayerLevel(Player player, int level) {

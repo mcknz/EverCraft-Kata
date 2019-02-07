@@ -1,6 +1,7 @@
 package com.mcknz.player;
 
 import com.mcknz.Abilities;
+import com.mcknz.Battle;
 import com.mcknz.player.constants.Alignment;
 
 public class Paladin extends Player {
@@ -15,11 +16,12 @@ public class Paladin extends Player {
     }
 
     @Override
-    public int getBaseDamage(Player opponent) {
+    public int getPlayerBaseDamage(Battle battle) {
+        Player opponent = battle.getOpponent();
         if(opponent.getAlignment() == Alignment.EVIL) {
             return 3;
         } else {
-            return super.getBaseDamage(opponent);
+            return super.getPlayerBaseDamage(battle);
         }
     }
 
