@@ -5,6 +5,8 @@ import com.mcknz.Battle;
 import com.mcknz.constants.ValueType;
 import com.mcknz.abilities.exceptions.AbilityException;
 import com.mcknz.items.armor.*;
+import com.mcknz.items.shield.Hand;
+import com.mcknz.items.shield.Shield;
 import com.mcknz.items.weapon.*;
 import com.mcknz.player.constants.*;
 import com.mcknz.abilities.constants.*;
@@ -20,8 +22,9 @@ public class Player {
     private final Map<ValueType, Integer> values = new HashMap<>();
     private final ClassType classType;
     private final RaceType raceType;
-    private Weapon weapon = new Hands();
-    private Armor armor = new Body();
+    private Weapon weapon = new Fist();
+    private Armor armor = new Skin();
+    private Shield shield = new Hand();
 
     public Player(PlayerOptions options, Abilities abilities) {
         this.abilities = abilities;
@@ -110,6 +113,10 @@ public class Player {
         return opponentArmorValue;
     }
 
+    public int getOpponentArmorAttackDecrease(Armor opponentArmor) {
+        return opponentArmor.getAttackDecrease();
+    }
+
     public final int getBaseDamage(Battle battle) {
         int weaponDamage = getWeaponBaseDamage(battle);
         if(weaponDamage > 0) {
@@ -156,6 +163,14 @@ public class Player {
         return this.armor;
     }
 
+    public void setShield(Shield shield) {
+        this.shield = shield;
+    }
+
+    public Shield getShield() {
+        return this.shield;
+    }
+
     protected int getLevelHitPointIncrease() {
         return 5;
     }
@@ -189,4 +204,6 @@ public class Player {
     private void setLevelValue(int value) {
         values.put(ValueType.LEVEL, value);
     }
+
+
 }

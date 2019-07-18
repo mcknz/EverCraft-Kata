@@ -3,7 +3,6 @@ package com.mcknz;
 import com.mcknz.abilities.constants.AbilityType;
 import com.mcknz.abilities.exceptions.AbilityException;
 import com.mcknz.items.weapon.Waraxe;
-import com.mcknz.items.weapon.Weapon;
 import com.mcknz.player.*;
 import com.mcknz.player.constants.*;
 import com.mcknz.player.exceptions.AlignmentException;

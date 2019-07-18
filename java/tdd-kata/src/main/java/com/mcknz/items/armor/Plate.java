@@ -1,8 +1,8 @@
 package com.mcknz.items.armor;
 
-public class Leather extends Armor {
+public class Plate extends Armor {
     @Override
     public int getAttackDecrease() {
-        return 2;
+        return 8;
     }
 }

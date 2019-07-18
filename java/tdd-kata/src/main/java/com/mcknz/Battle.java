@@ -82,6 +82,8 @@ public class Battle {
 
         newRoll += player.getWeaponAddedAttack(this);
 
+        newRoll -= player.getOpponentArmorAttackDecrease(opponent.getArmor());
+
         return newRoll + player.getRollIncrease(opponent);
     }
 }
